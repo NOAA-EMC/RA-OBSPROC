@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -eua
+
+rm -f SSMI* fort.*
+ln -sf ssmit.tab fort.50
+
+source cwbf rdssmi util.f
+
+data=data; ##rm -rf data; mkdir data; cd data
+#tar -xvf $1
+#cd ..
+
+for file in $(ls $data/*); do
+base=$(basename $file)
+plat=$(echo $base|cut -c 25-27)
+cat <<eof|rdssmi.x
+$file
+$plat
+eof
+done

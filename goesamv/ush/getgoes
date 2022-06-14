@@ -1,0 +1,7 @@
+set -euax
+
+yrmn=$1; dest=$2; mkdir -p $dest; cd $dest
+
+htar -xvf /5year/NCEPDEV/emc-global/Jack.Woollen/GOES-AMV-199501-201307 $yrmn-GOES-\*             
+
+

@@ -1,0 +1,26 @@
+set -eua
+
+export yrmn=$1
+export here=$PWD
+export data=$here/data
+export dest=$here/dest
+outs=$here/outputs; mkdir -p $outs 
+
+cat<<eof | qsub - 
+#!/bin/bash
+#PBS -N ssmis_convert_$yrmn
+#PBS -o $outs/ssmis_convert_$yrmn.$$
+#PBS -l select=1:mem=5GB
+#PBS -l walltime=6:00:00
+#PBS -A CFS-DEV
+#PBS -q dev  
+#PBS -j oe
+#PBS -V    
+
+#!/usr/bin/env bash
+set -euax 
+
+cd $here; runts $yrmn
+
+eof
+

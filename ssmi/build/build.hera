@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -e
+
+module purge
+module load intel
+module load impi/2018.0.4
+module use /scratch2/NCEPDEV/nwprod/NCEPLIBS/modulefiles
+module load bufr/11.3.0
+module load w3emc/2.3.1
+module load w3nco/2.0.6
+module load netcdf/4.7.0
+module list
+
+libs="$BUFR_LIB4 $W3NCO_LIB4 $W3EMC_LIB4 "
+netc="-L$NETCDF/lib -lnetcdf -lnetcdff $NETCDF/lib/libnetcdf.so.15 -I$NETCDF/include"
+ifort -O3 -traceback -g -free -o $1.x $1.f $2 $libs $netc
+
+

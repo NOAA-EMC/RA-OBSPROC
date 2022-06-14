@@ -1,0 +1,7 @@
+set -euax
+
+for bird in champ cosmic metop grace; do
+for yrmn in 201301 ; do
+gpsmnth $bird $yrmn
+done
+done

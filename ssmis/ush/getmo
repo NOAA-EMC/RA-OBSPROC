@@ -1,0 +1,12 @@
+set -euax
+
+yrmn=$1; fxx=$2; cd data
+
+[[ $fxx = F16 ]] && htar=SSMIS-F16-CMSAF-NETC-200511-201512
+[[ $fxx = F17 ]] && htar=SSMIS-F17-CMSAF-NETC-200612-201512
+[[ $fxx = F18 ]] && htar=SSMIS-F18-CMSAF-NETC-201003-201512
+
+[[ -s SSMIS-$fxx-CMSAF-NETC-$yrmn ]] && exit
+
+htar -xvf $eg5/$htar SSMIS-$fxx-CMSAF-NETC-$yrmn
+

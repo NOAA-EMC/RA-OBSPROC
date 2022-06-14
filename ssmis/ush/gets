@@ -1,0 +1,6 @@
+set -euax
+
+for yrmn in 201301 201302; do
+for fxx  in F16 F17 F18  ; do
+getmo $yrmn $fxx
+done; done

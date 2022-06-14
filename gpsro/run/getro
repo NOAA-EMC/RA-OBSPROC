@@ -1,0 +1,16 @@
+set -euax
+
+yrmn=$1; yrm1=$(bumpidx $yrmn -1)
+
+for mnth in $yrmn $yrm1; do 
+
+htar $eg5/GPSRO-CHAMP-ROMSAF-BUFR  \*$mnth\*
+htar $ec5/GPSRO-GRACE-ROMSAF-BUFR  \*$mnth\*
+htar $ec5/GPSRO-METOP-ROMSAF-BUFR  \*$mnth\*
+htar $ec5/GPSRO-COSMIC-ROMSAF-BUFR \*$mnth\*
+
+done
+
+
+
+

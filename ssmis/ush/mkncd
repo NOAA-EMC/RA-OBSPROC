@@ -1,0 +1,31 @@
+set -eua
+
+ncdcut=$1
+
+while read line; do
+var=$(echo $line|cut -d':' -f1)
+echo "      real(4),allocatable,dimension(:):: $var"
+done<$ncdcut
+echo
+
+while read line; do
+var=$(echo $line|cut -d':' -f1)
+echo "      allocate($var(numamv))"
+done<$ncdcut
+echo
+
+while read line; do
+var=$(echo $line|cut -d':' -f1)
+echo
+echo "      var=\"$var\""
+echo "      call check( nf_inq_varid(ncid,var,varid) )"
+echo "      call check( nf_get_var(ncid,varid,$var) )"
+done<$ncdcut
+echo
+
+while read line; do
+var=$(echo $line|cut -d':' -f1)
+echo "      print*,$var(1),\" $var\""
+done<$ncdcut
+echo
+

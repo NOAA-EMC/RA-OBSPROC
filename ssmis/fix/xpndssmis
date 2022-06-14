@@ -1,0 +1,108 @@
+ descriptor list for NC021201 MTYP 021-201 DMSP SSM/IS Tb (UNIFIED PRE-PROCESS
+ 
+001007  SAID      CODE TABLE       SATELLITE IDENTIFIER                
+008021  TSIG      CODE TABLE       TIME SIGNIFICANCE                   
+004001  YEAR      YEAR             YEAR                                
+004002  MNTH      MONTH            MONTH                               
+004003  DAYS      DAY              DAY                                 
+004004  HOUR      HOUR             HOUR                                
+004005  MINU      MINUTE           MINUTE                              
+201138                             CHANGE BIT WIDTH BY  10
+202131                             CHANGE SCALE BY   3
+004006  SECO      SECOND           SECOND                              
+202000                             RESET SCALE
+201000                             RESET BIT WIDTH
+201132                             CHANGE BIT WIDTH BY   4
+005041  SLNM      NUMERIC          SCAN LINE NUMBER                    
+201000                             RESET BIT WIDTH
+201129                             CHANGE BIT WIDTH BY   1
+005043  FOVN      NUMERIC          FIELD OF VIEW NUMBER                
+201000                             RESET BIT WIDTH
+005002  CLAT      DEGREE           LATITUDE (COARSE ACCURACY)          
+006002  CLON      DEGREE           LONGITUDE (COARSE ACCURACY)         
+013040  SFLG      CODE TABLE       SURFACE FLAG                        
+020029  RFLAG     CODE TABLE       RAIN FLAG                           
+104024                             REP  4 DESC BY  24
+005042  CHNM      NUMERIC          CHANNEL NUMBER                      
+012163  TMBR      KELVIN           BRIGHTNESS TEMPERATURE (HIGH ACCURAC
+021083  WTCA      NUMERIC          WARM TARGET CALIBRATION             
+021084  CTCA      NUMERIC          COLD TARGET CALIBRATION             
+115003                             REP 15 DESC BY   3
+004001  YEAR      YEAR             YEAR                                
+004002  MNTH      MONTH            MONTH                               
+004003  DAYS      DAY              DAY                                 
+201142                             CHANGE BIT WIDTH BY  14
+202131                             CHANGE SCALE BY   3
+004026  TPSE      SECOND           TIME PERIOD OR DISPLACEMENT         
+202000                             RESET SCALE
+201000                             RESET BIT WIDTH
+005001  CLATH     DEGREE           LATITUDE (HIGH ACCURACY)            
+006001  CLONH     DEGREE           LONGITUDE (HIGH ACCURACY)           
+201138                             CHANGE BIT WIDTH BY  10
+202129                             CHANGE SCALE BY   1
+007001  SELV      M                HEIGHT OF STATION                   
+202000                             RESET SCALE
+201000                             RESET BIT WIDTH
+008021  TSIG      CODE TABLE       TIME SIGNIFICANCE                   
+004001  YEAR      YEAR             YEAR                                
+004002  MNTH      MONTH            MONTH                               
+004003  DAYS      DAY              DAY                                 
+004004  HOUR      HOUR             HOUR                                
+004005  MINU      MINUTE           MINUTE                              
+005040  ORBN      NUMERIC          ORBIT NUMBER                        
+101003                             REP  1 DESC BY   3
+012070  WLTM      KELVIN           WARM LOAD TEMPERATURE               
+025054  SSID      NUMERIC          SSMIS SUBFRAME ID NUMBER            
+101004                             REP  1 DESC BY   4
+025055  MUHO      KELVIN           MULTIPLEXOR HOUSEKEEPING            
+008007  DIMS      CODE TABLE       DIMENSIONAL SIGNIFICANCE            
+104028                             REP  4 DESC BY  28
+005002  CLAT      DEGREE           LATITUDE (COARSE ACCURACY)          
+006002  CLON      DEGREE           LONGITUDE (COARSE ACCURACY)         
+002111  RAIA      DEGREE           RADAR INCIDENCE ANGLE               
+005021  BEARAZ    DEGREE TRUE      BEARING OR AZIMUTH                  
+ 
+ 
+ assignment list for NC021201 MTYP 021-201 DMSP SSM/IS Tb (UNIFIED PRE-PROCESS
+ 
+      arr(  1) =           ! CODE TAB  001007  SAID      SATELLITE IDENTIFIER            
+      arr(  2) =           ! CODE TAB  008021  TSIG      TIME SIGNIFICANCE               
+      arr(  3) =           ! YEAR      004001  YEAR      YEAR                            
+      arr(  4) =           ! MONTH     004002  MNTH      MONTH                           
+      arr(  5) =           ! DAY       004003  DAYS      DAY                             
+      arr(  6) =           ! HOUR      004004  HOUR      HOUR                            
+      arr(  7) =           ! MINUTE    004005  MINU      MINUTE                          
+      arr(  8) =           ! SECOND    004006  SECO      SECOND                          
+      arr(  9) =           ! NUMERIC   005041  SLNM      SCAN LINE NUMBER                
+      arr( 10) =           ! NUMERIC   005043  FOVN      FIELD OF VIEW NUMBER            
+      arr( 11) =           ! DEGREE    005002  CLAT      LATITUDE (COARSE ACCURACY)      
+      arr( 12) =           ! DEGREE    006002  CLON      LONGITUDE (COARSE ACCURACY)     
+      arr( 13) =           ! CODE TAB  013040  SFLG      SURFACE FLAG                    
+      arr( 14) =           ! CODE TAB  020029  RFLAG     RAIN FLAG                       
+      arr( 15) =           ! NUMERIC   005042  CHNM      CHANNEL NUMBER                  
+      arr( 16) =           ! KELVIN    012163  TMBR      BRIGHTNESS TEMPERATURE (HIGH ACC
+      arr( 17) =           ! NUMERIC   021083  WTCA      WARM TARGET CALIBRATION         
+      arr( 18) =           ! NUMERIC   021084  CTCA      COLD TARGET CALIBRATION         
+      arr( 19) =           ! YEAR      004001  YEAR      YEAR                            
+      arr( 20) =           ! MONTH     004002  MNTH      MONTH                           
+      arr( 21) =           ! DAY       004003  DAYS      DAY                             
+      arr( 22) =           ! SECOND    004026  TPSE      TIME PERIOD OR DISPLACEMENT     
+      arr( 23) =           ! DEGREE    005001  CLATH     LATITUDE (HIGH ACCURACY)        
+      arr( 24) =           ! DEGREE    006001  CLONH     LONGITUDE (HIGH ACCURACY)       
+      arr( 25) =           ! M         007001  SELV      HEIGHT OF STATION               
+      arr( 26) =           ! CODE TAB  008021  TSIG      TIME SIGNIFICANCE               
+      arr( 27) =           ! YEAR      004001  YEAR      YEAR                            
+      arr( 28) =           ! MONTH     004002  MNTH      MONTH                           
+      arr( 29) =           ! DAY       004003  DAYS      DAY                             
+      arr( 30) =           ! HOUR      004004  HOUR      HOUR                            
+      arr( 31) =           ! MINUTE    004005  MINU      MINUTE                          
+      arr( 32) =           ! NUMERIC   005040  ORBN      ORBIT NUMBER                    
+      arr( 33) =           ! KELVIN    012070  WLTM      WARM LOAD TEMPERATURE           
+      arr( 34) =           ! NUMERIC   025054  SSID      SSMIS SUBFRAME ID NUMBER        
+      arr( 35) =           ! KELVIN    025055  MUHO      MULTIPLEXOR HOUSEKEEPING        
+      arr( 36) =           ! CODE TAB  008007  DIMS      DIMENSIONAL SIGNIFICANCE        
+      arr( 37) =           ! DEGREE    005002  CLAT      LATITUDE (COARSE ACCURACY)      
+      arr( 38) =           ! DEGREE    006002  CLON      LONGITUDE (COARSE ACCURACY)     
+      arr( 39) =           ! DEGREE    002111  RAIA      RADAR INCIDENCE ANGLE           
+      arr( 40) =           ! DEGREE T  005021  BEARAZ    BEARING OR AZIMUTH              
+ 

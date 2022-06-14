@@ -1,0 +1,31 @@
+set -eua
+
+root=(cd ..;pwd)
+exec=$root/exec/bufrmeto.x
+tabl=$root/fix/satwnd.tab
+set +x
+
+yrmn=$1 dest=$2; prnt=${3:-prnt}
+
+dird=$dest/dird
+rm -rf    $dird
+mkdir -p  $dird
+cd        $dird
+cp $tabl  $dird 
+
+for data in $dest/*$yrmn; do
+for file in $(ls $data/*); do
+
+base=$(basename $file)
+chan=$(echo $base|cut -c 25-26)
+
+cat <<eof|$exec
+$file
+$chan
+$prnt
+eof
+
+done
+done
+
+

@@ -1,0 +1,6 @@
+		time:long_name = "scan start time" ;
+		tfrac:long_name = "scan time micro seconds" ;
+		rev:long_name = "revolution number" ;
+		qc_scan:long_name = "scanline quality control" ;
+		pflag:long_name = "processing flag" ;
+		qc_channel:long_name = "channel quality control" ;

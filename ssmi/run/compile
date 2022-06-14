@@ -1,0 +1,9 @@
+set -euax
+
+plat=$1
+
+root=$(cd ..;pwd)
+exec=$root/exec
+sorc=$root/sorc
+
+$root/build/build.$plat

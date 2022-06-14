@@ -1,0 +1,188 @@
+.------------------------------------------------------------------------------.
+| ------------   USER DEFINITIONS FOR TABLE-A TABLE-B TABLE D   -------------- |
+|------------------------------------------------------------------------------|
+| MNEMONIC | NUMBER | DESCRIPTION                                              |
+|----------|--------|----------------------------------------------------------|
+|          |        |                                                          |
+| NC012122 | A54000 | TABLE A MNEMONIC MSTTB001                                |
+|          |        |                                                          |
+| ASCAT1B2 | 312061 | ASCAT Level 1b and level 2 data                          |
+| ASCAT1BD | 312058 | ASCAT level 1b data                                      |
+| ASCATHDR | 301125 | ASCAT header information                                 |
+| YYMMDD   | 301011 |                                                          |
+| HHMMSS   | 301013 |                                                          |
+| LTLONH   | 301021 |                                                          |
+| ASCAT1BC | 312055 | ASCAT level 1b cell information                          |
+| ASCATSG0 | 321030 | ASCAT sigma-0 information                                |
+| SCATSMST | 312060 | Scatterometer soil moisture data                         |
+| SCATWNDD | 312059 | Scatterometer wind data                                  |
+| SCATWNDC | 312056 | Scatterometer wind cell information                      |
+| AMBIGWND | 312057 | Ambiguous wind data                                      |
+|          |        |                                                          |
+| OGCE     | 001033 | Identification of originating/generating centre          |
+| GSES     | 001034 | Identification of originating/generating sub-centre      |
+| SWID     | 025060 | Software identification                                  |
+| SAID     | 001007 | Satellite identifier                                     |
+| SIID     | 002019 | Satellite instruments                                    |
+| DOMO     | 001012 | Direction of motion of moving observing platform         |
+| YEAR     | 004001 | Year                                                     |
+| MNTH     | 004002 | Month                                                    |
+| DAYS     | 004003 | Day                                                      |
+| HOUR     | 004004 | Hour                                                     |
+| MINU     | 004005 | Minute                                                   |
+| SECO     | 004006 | Second                                                   |
+| CLATH    | 005001 | Latitude (high accuracy)                                 |
+| CLONH    | 006001 | Longitude (high accuracy)                                |
+| PSH1     | 005033 | Pixel size on horizontal - 1                             |
+| ORBN     | 005040 | Orbit number                                             |
+| CTCN     | 006034 | Cross-track cell number                                  |
+| HOAU     | 010095 | Height of atmosphere used                                |
+| LULAU    | 021157 | Loss per unit length of atmosphere used                  |
+| BEAMC    | 021150 | Beam collocation                                         |
+| BEAMI    | 008085 | Beam identifier                                          |
+| RAIA     | 002111 | Radar incidence angle                                    |
+| ANAZ     | 002134 | Antenna beam azimuth                                     |
+| BKST     | 021062 | Backscatter                                              |
+| RARE     | 021063 | Radiometric resolution (noise value)                     |
+| AKPEQ    | 021158 | ASCAT KP quality estimate                                |
+| ASGU     | 021159 | ASCAT sigma-0 usability                                  |
+| AUSY     | 021160 | ASCAT use of synthetic data                              |
+| ASDQ     | 021161 | ASCAT synthetic data quality                             |
+| ASOAQ    | 021162 | ASCAT satellite orbit and attitude quality               |
+| ASARC    | 021163 | ASCAT solar array reflection contamination               |
+| ATPQ     | 021164 | ASCAT telemetry presence and quality                     |
+| AERFP    | 021165 | ASCAT extrapolated reference function presence           |
+| ALFR     | 021166 | ASCAT land fraction                                      |
+| DBID     | 025062 | Database identification                                  |
+| SSOM     | 040001 | Surface soil moisture (ms)                               |
+| EESSM    | 040002 | Estimated error in surface soil moisture                 |
+| EES40    | 021151 | Estimated error in sigma-0 at 40 degrees incidence angl  |
+| S40IA    | 021152 | Slope at 40 degrees incidence angle                      |
+| EEL40    | 021153 | Estimated error in slope at 40 degrees incidence angle   |
+| SMOS     | 021154 | Soil moisture sensitivity                                |
+| WBKS     | 021088 | Wet backscatter                                          |
+| MSSM     | 040003 | Mean surface soil moisture                               |
+| RFDT     | 040004 | Rain fall detection                                      |
+| SMCF     | 040005 | Soil moisture correction flag                            |
+| SMPF     | 040006 | Soil moisture processing flag                            |
+| SMQL     | 040007 | Soil moisture quality                                    |
+| SNOC     | 020065 | Snow cover                                               |
+| FLSF     | 040008 | Frozen land surface fraction                             |
+| IWFR     | 040009 | Inundation and wetland fraction                          |
+| TPCX     | 040010 | Topographic complexity                                   |
+| GNAP     | 001032 | Generating application                                   |
+| MWS10    | 011082 | Model wind speed at 10m                                  |
+| MWD10    | 011081 | Model wind direction at 10m                              |
+| ICEP     | 020095 | Ice probability                                          |
+| ICEA     | 020096 | Ice age ("A" parameter)                                  |
+| WVCQ     | 021155 | Wind vector cell quality                                 |
+| NWVA     | 021101 | Number of vector ambiguities                             |
+| ISWV     | 021102 | Index of selected wind vector                            |
+| WS10     | 011012 | Wind speed at 10 m                                       |
+| WD10     | 011011 | Wind direction at 10 m                                   |
+| BSCD     | 021156 | Backscatter distance                                     |
+| LKCS     | 021104 | Likelihood computed for solution                         |
+|          |        |                                                          |
+|------------------------------------------------------------------------------|
+| MNEMONIC | SEQUENCE                                                          |
+|----------|-------------------------------------------------------------------|
+|          |                                                                   |
+| NC012122 | ASCAT1B2                                                          |
+|          |                                                                   |
+| ASCAT1B2 | ASCAT1BD  SCATSMST  SCATWNDD                                      |
+|          |                                                                   |
+| ASCAT1BD | ASCATHDR  YYMMDD  HHMMSS  LTLONH  ASCAT1BC  BEAMC  "ASCATSG0"3    |
+|          |                                                                   |
+| ASCATHDR | OGCE  GSES  SWID  SAID  SIID  DOMO                                |
+|          |                                                                   |
+| YYMMDD   | YEAR  MNTH  DAYS                                                  |
+|          |                                                                   |
+| HHMMSS   | HOUR  MINU  SECO                                                  |
+|          |                                                                   |
+| LTLONH   | CLATH  CLONH                                                      |
+|          |                                                                   |
+| ASCAT1BC | PSH1  ORBN  CTCN  HOAU  LULAU                                     |
+|          |                                                                   |
+| ASCATSG0 | BEAMI  202129  201131  RAIA  201000  202000  ANAZ  BKST  RARE     |
+| ASCATSG0 | AKPEQ  ASGU  AUSY  ASDQ  ASOAQ  ASARC  ATPQ  AERFP  ALFR          |
+|          |                                                                   |
+| SCATSMST | SWID  DBID  SSOM  EESSM  BKST  EES40  S40IA  EEL40  SMOS  BKST    |
+| SCATSMST | WBKS  MSSM  RFDT  SMCF  SMPF  SMQL  SNOC  FLSF  IWFR  TPCX        |
+|          |                                                                   |
+| SCATWNDD | SCATWNDC  {AMBIGWND}                                              |
+|          |                                                                   |
+| SCATWNDC | SWID  GNAP  MWS10  MWD10  ICEP  ICEA  WVCQ  201133  NWVA  ISWV    |
+| SCATWNDC | 201000                                                            |
+|          |                                                                   |
+| AMBIGWND | 201130  202129  WS10  202000  201000  201131  202129  WD10        |
+| AMBIGWND | 202000  201000  BSCD  LKCS                                        |
+|          |                                                                   |
+|------------------------------------------------------------------------------|
+| MNEMONIC | SCAL | REFERENCE   | BIT | UNITS                    |-------------|
+|----------|------|-------------|-----|--------------------------|-------------|
+|          |      |             |     |                          |-------------|
+| OGCE     |    0 |           0 |   8 | CODE TABLE               |-------------|
+| GSES     |    0 |           0 |   8 | CODE TABLE               |-------------|
+| SWID     |    0 |           0 |  14 | NUMERIC                  |-------------|
+| SAID     |    0 |           0 |  10 | CODE TABLE               |-------------|
+| SIID     |    0 |           0 |  11 | CODE TABLE               |-------------|
+| DOMO     |    0 |           0 |   9 | DEGREE TRUE              |-------------|
+| YEAR     |    0 |           0 |  12 | YEAR                     |-------------|
+| MNTH     |    0 |           0 |   4 | MONTH                    |-------------|
+| DAYS     |    0 |           0 |   6 | DAY                      |-------------|
+| HOUR     |    0 |           0 |   5 | HOUR                     |-------------|
+| MINU     |    0 |           0 |   6 | MINUTE                   |-------------|
+| SECO     |    0 |           0 |   6 | S                        |-------------|
+| CLATH    |    5 |    -9000000 |  25 | DEGREE                   |-------------|
+| CLONH    |    5 |   -18000000 |  26 | DEGREE                   |-------------|
+| PSH1     |   -1 |           0 |  16 | M                        |-------------|
+| ORBN     |    0 |           0 |  24 | NUMERIC                  |-------------|
+| CTCN     |    0 |           0 |   7 | NUMERIC                  |-------------|
+| HOAU     |    0 |           0 |  16 | M                        |-------------|
+| LULAU    |   10 |           0 |  22 | DB M**-1                 |-------------|
+| BEAMC    |    0 |           0 |   2 | CODE TABLE               |-------------|
+| BEAMI    |    0 |           0 |   3 | CODE TABLE               |-------------|
+| RAIA     |    1 |           0 |  10 | DEGREE                   |-------------|
+| ANAZ     |    2 |           0 |  16 | DEGREE                   |-------------|
+| BKST     |    2 |       -5000 |  13 | DB                       |-------------|
+| RARE     |    1 |           0 |  10 | %                        |-------------|
+| AKPEQ    |    0 |           0 |   2 | CODE TABLE               |-------------|
+| ASGU     |    0 |           0 |   2 | CODE TABLE               |-------------|
+| AUSY     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ASDQ     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ASOAQ    |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ASARC    |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ATPQ     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| AERFP    |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ALFR     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| DBID     |    0 |           0 |  14 | NUMERIC                  |-------------|
+| SSOM     |    1 |           0 |  10 | %                        |-------------|
+| EESSM    |    1 |           0 |  10 | %                        |-------------|
+| EES40    |    2 |           0 |   9 | DB                       |-------------|
+| S40IA    |    2 |         -80 |   7 | DB DEGREE**-1            |-------------|
+| EEL40    |    2 |         -40 |   6 | DB DEGREE**-1            |-------------|
+| SMOS     |    2 |           0 |  12 | DB                       |-------------|
+| WBKS     |    2 |       -5000 |  13 | DB                       |-------------|
+| MSSM     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| RFDT     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| SMCF     |    0 |           0 |   8 | FLAG TABLE               |-------------|
+| SMPF     |    0 |           0 |  16 | FLAG TABLE               |-------------|
+| SMQL     |    1 |           0 |  10 | %                        |-------------|
+| SNOC     |    0 |           0 |   7 | %                        |-------------|
+| FLSF     |    1 |           0 |  10 | %                        |-------------|
+| IWFR     |    1 |           0 |  10 | %                        |-------------|
+| TPCX     |    1 |           0 |  10 | %                        |-------------|
+| GNAP     |    0 |           0 |   8 | CODE TABLE               |-------------|
+| MWS10    |    2 |           0 |  14 | M S**-1                  |-------------|
+| MWD10    |    2 |           0 |  16 | DEGREE TRUE              |-------------|
+| ICEP     |    3 |           0 |  10 | NUMERIC                  |-------------|
+| ICEA     |    2 |       -4096 |  13 | DB                       |-------------|
+| WVCQ     |    0 |           0 |  24 | FLAG TABLE               |-------------|
+| NWVA     |    0 |           0 |   3 | NUMERIC                  |-------------|
+| ISWV     |    0 |           0 |   3 | NUMERIC                  |-------------|
+| WS10     |    1 |           0 |  12 | M S**-1                  |-------------|
+| WD10     |    0 |           0 |   9 | DEGREE TRUE              |-------------|
+| BSCD     |    1 |       -4096 |  13 | NUMERIC                  |-------------|
+| LKCS     |    3 |      -30000 |  15 | NUMERIC                  |-------------|
+|          |      |             |     |                          |-------------|
+`------------------------------------------------------------------------------'

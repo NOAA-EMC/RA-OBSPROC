@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -eua
+
+yrmn=$1 dest=$2
+
+yrmn1=$(bumpidx ${yrmn}   -1)
+yrmd1=$(bumpidx ${yrmn}01 -1)
+yrmn2=$yrmn
+
+root=$(cd ..;pwd)
+metsats=$root/fix/metsats
+mkdir -p $dest; cd $dest
+
+for yrmn in $yrmn1 $yrmn2; do
+year=$(echo $yrmn|cut -c 1-4)
+cat<<eof>mets
+$(grep $year $metsats)
+eof
+mets=
+while read line; do
+mets="$mets $(echo $line|cut -d' ' -f1)"
+done<mets
+done
+
+for yrmn in $yrmn1 $yrmn2; do
+for met in $mets; do
+[[ -s $met-$yrmn.netcdf.tgz ]] || htar -xvf $ec5/$met-CMSAF-NETC $met-$yrmn.netcdf.tgz
+[[ -s $met-$yrmn.netcdf.tgz ]] && mkdir -p $met.$yrmn2
+done
+done
+
+for yrmn in $yrmn1 $yrmn2; do
+for met in $mets; do
+if [[  -s $dest/$met-$yrmn.netcdf.tgz ]]; then
+  cd $dest/$met.$yrmn2
+  set +e
+  [[ $yrmn = $yrmn1 ]] && tar --wildcards -zxf $dest/$met-$yrmn.netcdf.tgz \*$yrmd1\*
+  [[ $yrmn = $yrmn2 ]] && tar --wildcards -zxf $dest/$met-$yrmn.netcdf.tgz
+  [[ $yrmn = $yrmn2 ]] && echo $(date) $met.$yrmn2
+  set -e
+fi
+done
+done
+

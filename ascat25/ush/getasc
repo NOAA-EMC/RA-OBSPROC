@@ -1,0 +1,8 @@
+set -euax
+
+yrmn=$1; yrm1=$(bumpidx $yrmn -1)
+dest=$2; mkdir -p $dest; cd $dest
+
+ascatw=/5year/NCEPDEV/emc-global/Jack.Woollen/ASCAT25-METOP-UMSDS-BUFR-200701-201403
+
+htar -xvf $ascatw  ASCAT25-METOP-UMSDS-BUFR-$yrmn ASCAT25-METOP-UMSDS-BUFR-$yrm1

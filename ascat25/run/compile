@@ -1,0 +1,12 @@
+set -euax
+
+set -euax
+
+plat=$1
+
+root=$(cd ..;pwd)
+exec=$root/exec; mkdir -p $exec
+sorc=$root/sorc
+
+$root/build/build.$plat
+

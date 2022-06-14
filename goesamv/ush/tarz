@@ -1,0 +1,6 @@
+set -euax
+
+cd dest
+
+tar -cvf $dan/repro/satwnd.GOES13.201301 satwnd.GOES13.201301*
+tar -cvf $dan/repro/satwnd.GOES15.201301 satwnd.GOES15.201301*

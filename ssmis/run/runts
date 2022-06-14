@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -eua
+
+cd $(dirname $0); root=$(cd ..;pwd); compile wc2 
+
+yrmn=$1
+data=$2; mkdir -p $data
+dest=$data/dest; rm -rf $dest; mkdir -p $dest
+
+yrml=$(bumpidx ${yrmn}    -1)
+ymdl=$(bumpidx ${yrmn}01  -1)
+
+# stage the data for the month
+
+cd $data; rm -f BTRin*
+
+for file in SSMIS*$yrml; do
+tar --wildcards -xvf $file BTRin$ymdl\*  
+done
+for file in SSMIS*$yrmn; do
+tar -xvf $file 
+done
+
+# convert the data for the month
+
+cd $dest; cp $root/fix/b021.tab $dest
+
+for file in $(ls $data/BTRin*); do
+echo $(date) $file
+echo $file | $root/exec/exec_smis_2_gsi
+done
+

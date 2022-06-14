@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euax
+
+PATH=$PATH:/home/Jack.Woollen/bin:.
+
+export inst=ascatw 
+export bird=$1
+export year=$2
+export yend=$2
+export here=$PWD
+export data=$PWD/data  
+
+[[ $# -eq 3 ]] && mnths="$3" || mnths="01 02 03 04 05 06 07 08 09 10 11 12"
+
+while [[ $year -le $yend ]]; do
+for mnth in $mnths; do
+
+yrmn=$year$mnth
+ymdf=${yrmn}01
+yrml=$(bumpidx $yrmn -1)
+ymdl=$(bumpidx $ymdf -1)
+
+cd work/synoptic/prepro
+
+for ascin in $(ls ../$inst.$bird.$yrmn*); do
+$here/prepro_ascatw $ascin $(basename $ascin) >/dev/null
+done
+
+tar -cf $here/$inst.$bird.$year$mnth  $inst.$bird.$yrmn*
+
+done # months
+year=$((year+1))
+done #years

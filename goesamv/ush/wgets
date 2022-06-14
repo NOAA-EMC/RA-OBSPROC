@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eua
+
+year=$1
+here=$PWD
+
+mkdir -p data; cd data
+
+for file in $(grep $year $here/goeslist); do
+wget  http://tropic.ssec.wisc.edu/archive/data/goes_reprocess/wind_files/$file
+done

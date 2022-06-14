@@ -1,0 +1,15 @@
+
+      do k=1,scans
+      if(qc_scan(k)/=0) tb(:,:,k) = fill
+
+      do j=1,nchan
+      jj=scene_channel(j)+1
+      if(qc_chan(jj,k)/=0) tb(:,j,k) = fill
+      enddo
+
+      do i=1,nspot
+      if(qc_fov(i,k)/=0) tb(i,:,k) = fill
+      enddo
+
+      enddo
+

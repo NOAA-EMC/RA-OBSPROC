@@ -1,0 +1,51 @@
+set -eua
+
+yrmn=$1  yrm1=$(bumpidx $yrmn -1); yrm1end=$(bumpidx ${yrmn}01 -1)
+data=$2                 
+
+echo
+echo process $yrmn starting on $yrm1end
+echo
+
+# define the working files and directories
+
+cd $(dirname $0); root=$(cd ..;pwd)
+dird=$data/dird; rm -rf $dird; mkdir -p $dird
+dest=$data/dest; rm -rf $dest; mkdir -p $dest
+tabl=$root/fix/goes-bufr-tab
+
+# stage a month of data into dird for bufr-ing
+
+cd $dird
+
+cp $data/$yrmn* $dird
+cp $data/$yrm1* $dird
+gunzip -v *.gz
+echo
+
+set +e
+for tarf in $(ls *.tar); do
+echo $tarf
+tar --wildcards -xf $tarf \*$yrm1end\* 2>/dev/null
+tar --wildcards -xf $tarf \*$yrmn\*    2>/dev/null
+done
+set -e
+
+# process files in dird into bufr files in dest
+
+cd $dest
+
+date=${yrm1end} dend=${yrmn}32
+
+while [[ $date -le $dend ]]; do
+echo $(date) process $date
+for file in $(ls $dird/*$date*); do
+
+cat <<eof|$root/exec/bufrgoes.x
+$file
+$tabl
+eof
+
+done
+date=$(bumpidx $date 1)
+done

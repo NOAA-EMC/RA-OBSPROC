@@ -1,0 +1,7 @@
+set -euax
+
+cd dest
+
+for bird in     F17 F18; do
+tar -cvf $dan/repro/SSMIS.$bird.201302  SSMIS.$bird.201302*
+done

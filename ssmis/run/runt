@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -eua
+
+module load netcdf/4.7.4; cwbf.wc2
+
+rm -f SS*
+
+##echo BTRin20140101000000324SSF1801GL.nc | exec_smis_2_gsi
+
+echo $1 | exec_smis_2_gsi
+
