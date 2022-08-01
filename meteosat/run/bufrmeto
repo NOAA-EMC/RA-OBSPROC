@@ -1,31 +1,43 @@
 set -eua
 
-root=(cd ..;pwd)
+root=$(cd ..;pwd)
 exec=$root/exec/bufrmeto.x
 tabl=$root/fix/satwnd.tab
-set +x
+module load netcdf/4.7.4
 
-yrmn=$1 dest=$2; prnt=${3:-prnt}
+yrmn=$1; yrm1=$(bumpidx $yrmn -1)
+data=$2; prnt=${3:-prnt}
 
-dird=$dest/dird
+# setup individual data files for the month in dird
+
+dird=$data/dird.$yrmn
 rm -rf    $dird
 mkdir -p  $dird
 cd        $dird
-cp $tabl  $dird 
 
-for data in $dest/*$yrmn; do
-for file in $(ls $data/*); do
+for yymm in $yrm1 $yrmn; do 
+for file in $(ls $data/M*$yymm*); do
+[[ $yymm = $yrm1 ]] && tar --wildcards -zxf $file \*$(bumpidx ${yrmn}01 -1)\*
+[[ $yymm = $yrmn ]] && tar --wildcards -zxf $file
+done;done
 
+# translate the netcdf into bufr in dest
+
+dest=$data/dest.$yrmn
+rm -rf    $dest
+mkdir -p  $dest
+cp $tabl  $dest 
+cd        $dest
+
+for file in $(ls $dird/*); do
 base=$(basename $file)
 chan=$(echo $base|cut -c 25-26)
-
-cat <<eof|$exec
+cat <<eof|$exec > /dev/null
 $file
 $chan
 $prnt
 eof
-
-done
 done
 
+rm -rf $dird
 

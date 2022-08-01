@@ -1,0 +1,36 @@
+set -eua
+
+year=$1; dest=$2
+yrmn=$(bumpidx ${year}01 -1)
+
+root=$(cd ..;pwd)
+mkdir -p $dest; cd $dest
+
+# get the year of data
+
+>ssmihtar
+
+while read  line; do
+yr1=$(echo $line|cut -d'-' -f6|cut -c 1-4)
+yr2=$(echo $line|cut -d'-' -f7|cut -c 1-4)
+[[ $year -ge $yr1 && $year -le $yr2 ]] && echo $line >> ssmihtar
+done<$root/fix/ssmilist
+
+for arch in $(cat ssmihtar); do
+htar  -xvf $arch \*$year\* 
+done
+
+# get the month befor the year
+
+>ssmihtar
+
+while read  line; do
+ym1=$(echo $line|cut -d'-' -f6)
+ym2=$(echo $line|cut -d'-' -f7)
+[[ $yrmn -ge $ym1 && $yrmn -le $ym2 ]] && echo $line >> ssmihtar
+done<$root/fix/ssmilist
+
+for arch in $(cat ssmihtar); do
+tarf=$(basename $arch|cut -c 1-20)$yrmn
+[[ -s $tarf ]] || htar -xvf $arch $tarf  
+done

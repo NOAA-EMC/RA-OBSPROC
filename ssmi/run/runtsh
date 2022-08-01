@@ -1,27 +1,32 @@
 set -euax
 
-compile wc2
-
 root=$(cd ..;pwd)
-
-yrmn=$1; data=$2
-yrml=$(bumpidx $yrmn -1)
-
+yrmn=$1; yrml=$(bumpidx $yrmn -1)
 data=$ptmp/ssmidata; mkdir -p $data
-#$root/ush/getssmi $yrmn $data
-#$root/ush/getssmi $yrml $data
+runt=$yrmn; source $root/build/build.wc2
 
-dird=$data/dird; rm -rf $dird; mkdir $dird; cd $dird 
-
-#tar -xvf $data/*$yrml  $(basename $data/*$yrml)$(bumpidx ${yrmn}01)
-tar -xvf $data/*$yrmn
-
-dest=$data/dest; rm -rf $dest; mkdir $dest; cd $dest 
-
+dest=$data/dest.$yrmn; rm -rf $dest; mkdir $dest; cd $dest 
 ln -sf $root/fix/ssmit.tab fort.50
+
+for mnth in $yrml $yrmn; do
+for file in $(ls $data/SSMI*$mnth); do
+
+dird=$data/dird.$yrmn; rm -rf $dird; mkdir $dird; cd $dird 
+
+if [[ $(echo $file|cut -d- -f5) = $yrml ]]; then
+ tar --wildcards -xvf $file  \*$(bumpidx ${yrmn}01 -1)\*
+else
+ tar -xvf $file 
+fi
+
+cd $dest
 
 for file in $(ls $dird/*.nc); do
 cat <<eof|$root/exec/rdssmi.x
 $file
 eof
 done
+done
+done
+
+rm -rf $data/dird.$yrmn

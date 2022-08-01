@@ -3,7 +3,8 @@ set -euax
 plat=$1
 
 root=$(cd ..;pwd)
-exec=$root/exec
+exec=$root/exec; mkdir -p $exec
 sorc=$root/sorc
+runt=compile
 
 $root/build/build.$plat

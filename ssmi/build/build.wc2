@@ -16,10 +16,11 @@ module load netcdf/4.7.4
 module list
 set -x
 
-libs="$BUFR_LIB4 $W3NCO_LIB4 $W3EMC_LIB4"
-NETCDF_INCLUDE="-I $NETCDF/includes"
-NETCDF_LIBRARIES="-L $NETCDF/lib -lnetcdf -lnetcdff"
-NETCDF="$NETCDF_INCLUDE $NETCDF_LIBRARIES"
-
-ftn -O3 -traceback -g -free -o $exec/$main.x $sorc/$main.f $sorc/util.f $libs $NETCDF
+if [[ $runt = compile ]]; then
+ libs="$BUFR_LIB4 $W3NCO_LIB4 $W3EMC_LIB4"
+ NETCDF_INCLUDE="-I $NETCDF/includes"
+ NETCDF_LIBRARIES="-L $NETCDF/lib -lnetcdf -lnetcdff"
+ NETCDF="$NETCDF_INCLUDE $NETCDF_LIBRARIES"
+ ftn -O3 -traceback -g -free -o $exec/$main.x $sorc/$main.f $sorc/util.f $libs $NETCDF
+fi
 
