@@ -24,5 +24,5 @@ cd $sorc/wave_dcodquikscat.fd
 make clean
 make
 make clean
-mv wave_dcodquiksca $exec
+mv wave_dcodquikscat $exec
 

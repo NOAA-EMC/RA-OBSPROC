@@ -1,0 +1,23 @@
+set -euax
+
+year=$1; dest=$2; mkdir -p $dest; cd $dest
+yrmn=$(bumpidx ${year}01 -1) 
+yrnd=${year}12
+
+while [[ $yrmn -le $yrnd ]]; do 
+year=$(echo $yrmn|cut -c 1-4)
+#htar -xf $eg5/GPSRO-CHAMP-ROMSAF-BUFR  champ/bfr/$year/bfr_\*$yrmn\*
+#htar -xf $ec5/GPSRO-GRACE-ROMSAF-BUFR  grace/bfr/$year/bfr_\*$yrmn\*
+#htar -xf $ec5/GPSRO-METOP-ROMSAF-BUFR  metop/bfr/$year/bfr_\*$yrmn\*
+#htar -xf $ec5/GPSRO-COSMIC-ROMSAF-BUFR cosmic/bfr/$year/bfr_\*$yrmn\*
+yrmn=$(bumpidx $yrmn 1)
+done
+
+set +e
+for bird in champ grace metop cosmic; do
+cp  $bird/bfr/$((year-1))/bfr_$(bumpidx ${year}0101 -1)*  $bird/bfr/$year
+done
+
+
+
+

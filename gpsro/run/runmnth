@@ -1,0 +1,8 @@
+set -eua
+
+yrmn=$1
+
+gpsmnth champ  $yrmn 
+gpsmnth grace  $yrmn
+gpsmnth metop  $yrmn
+gpsmnth cosmic $yrmn

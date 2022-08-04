@@ -5,21 +5,20 @@ set -eua
 
 export bird=$1
 export year=$2
-export here=$PWD
-export root=$PWD  
-export rtab=$PWD/romsaf.tab
-export ntab=$PWD/gpssaf.tab
-export convert=$PWD/convert.x
-
-export data=$ptmp/gpsro/$bird/bfr
+export root=$(cd ..;pwd) 
+export exec=$root/exec  
+export fixt=$root/fix   
 
 [[ $year -gt 9999 ]] && mons=$(echo $year|cut -c 5-6) || mons="01 02 03 04 05 06 07 08 09 10 11 12"
 [[ $year -gt 9999 ]] && year=$(echo $year|cut -c 1-4)
 [[ $# -eq 3 ]] && yend=$3 || yend=$year
 
+export data=$ptmp/gpsro.$year/$bird/bfr
+export here=$ptmp/gpsro.$year/here; mkdir -p $here
+
 while [[ $year -le $yend ]]; do
 for mnth in $mons; do
-cd $here; work=$PWD/work; rm -rf $work; mkdir -p $work; cd $work
+cd $here; work=$PWD/work.$year$mnth; rm -rf $work; mkdir -p $work; cd $work
 echo $(date) creating $here/gpsro.$bird.$year$mnth
 
 dab4=$(bumpidx $year${mnth}01 -1); ##yrb4=$(echo $dab4|cut -c 1-4)
@@ -28,7 +27,7 @@ set +e; ls $data/$year/bfr_$year$mnth* >>mnthlist 2>/dev/null; set -e
 [[ -s mnthlist ]] ||  continue
 
 for tarf in $(cat mnthlist); do
-echo $tarf
+##echo $tarf
 tar -zxf $tarf 
 datag=$(ls -d *-*); date=$(echo $datag|sed -e"s/-//g")
 set +e
@@ -42,11 +41,13 @@ cat $bird.* > $bird.$year$mnth.cat
 mkdir synoptic; cd synoptic
 
 ln -sf $work/$bird.$year$mnth.cat  fort.20
-ln -sf $root/gpssaf.tab             fort.21
-ln -sf $root/gpssaf.tab             fort.50
-echo $bird|$here/convert.x ###>/dev/null
+ln -sf $fixt/gpssaf.tab             fort.21
+ln -sf $fixt/gpssaf.tab             fort.50
+echo $bird|$exec/convert.x >/dev/null
 
 tar -cf $here/gpsro.$bird.$year$mnth  gpsro.$bird.$year$mnth*
+
+cd $here; rm -rf $work
 
 done # months
 year=$((year+1))

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -eua
+
+ascin=$1 ascout=$2
+
+landc=$root/fix/wave_landchxh
+astab=$root/fix/wave_bufrtab.ascat
+ dasx=$root/exec/wave_dcodquikscat
+
+cat <<EOFd > dcodascat.parm
+ &RDATA
+  ITYPE  = 2,      ! Report type (1 for QUIKSCAT, 2 for ASCAT; here 2)
+  IPRINT = 1,      ! Toggle (0=off,1=on) for text listing of all reprocessed
+                   !  reports in unit 51
+  ISUPOB = 0,      ! Superob the reports (=1, =0 - don't superob reports)
+  DELAT  = 0.5,    !  - latitude  spacing (degrees) of superob grid box
+  DELON  = 0.5,    !  - longitude spacing (degrees) of superob grid box
+  LIMCNT = 2,      !  - minimum number of reports per superob box required to
+                   !    make superob
+  IQCPOR = 0,      ! Perform probability of rain q.c. {CURRENTLY NO (0) FOR
+                   !  ASCAT}
+  PORLIM = 1.00,   !  - if IQCPOR = 1, all rpts with p.o.r. .gt. this are tossed
+  IQCEDG = 0,      ! Perform orbital swath edge q.c. {CURRENTLY NO (0) FOR
+                   !  ASCAT}
+  IEDLLM = -99999, !  - if IQCPOR = 1, all rpts with cell # .le. this are tossed
+  IEDULM =  99999, !  - if IQCPOR = 1, all rpts with cell # .ge. this are tossed
+  IQCWVC = 1,      ! Examine wind vector cell quality flags
+  LATS   =-90,     ! Southernmost lat boundary (deg) for accepting rpts (N+; S-)
+  LATN   =+90,     ! Northernmost lat boundary (deg) for accepting rpts (N+; S-)
+  LONW   =360,     ! Westernmost  lon boundary (deg) for accepting rpts (0-360W)
+  LONE   =  0      ! Easternmost  lon boundary (deg) for accepting rpts (0-360W)
+ /
+EOFd
+
+rm -f fort.*
+
+ln -sf $ascin  fort.11
+ln -sf $landc  fort.19
+ln -sf $astab  fort.20 
+ln -sf asclst  fort.51
+ln -sf $ascout fort.52
+
+$dasx < dcodascat.parm 
+
