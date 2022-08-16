@@ -16,7 +16,7 @@ mkdir -p  $dird
 cd        $dird
 
 for yymm in $yrm1 $yrmn; do 
-for file in $(ls $data/M*$yymm*); do
+for file in $(ls $data/M*$yymm*tgz); do
 [[ $yymm = $yrm1 ]] && tar --wildcards -zxf $file \*$(bumpidx ${yrmn}01 -1)\*
 [[ $yymm = $yrmn ]] && tar --wildcards -zxf $file
 done;done

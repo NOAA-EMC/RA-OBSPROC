@@ -19,7 +19,7 @@ tabl=$root/fix/goes-bufr-tab
 cd $dird
 
 cp $data/$yrmn* $dird
-cp $data/$yrm1* $dird
+set +e; cp $data/$yrm1* $dird; set -e
 gunzip -v *.gz
 echo
 

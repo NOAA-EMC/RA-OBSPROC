@@ -1,4 +1,4 @@
-set -eua
+set -euax
 
 year=$1; dest=$2
 yrmn=$(bumpidx ${year}01 -1)
@@ -16,9 +16,12 @@ yr2=$(echo $line|cut -d'-' -f7|cut -c 1-4)
 [[ $year -ge $yr1 && $year -le $yr2 ]] && echo $line >> ssmihtar
 done<$root/fix/ssmilist
 
+cat ssmihtar; set -x
+
 for arch in $(cat ssmihtar); do
 htar  -xvf $arch \*$year\* 
 done
+
 
 # get the month befor the year
 
