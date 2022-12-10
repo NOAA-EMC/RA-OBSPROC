@@ -1,0 +1,2 @@
+set -euax
+scp -r $hera/scratch1/NCEPDEV/stmp2/Jack.Woollen/gpsro.$1 $ptmp

@@ -8,7 +8,7 @@ cat<<eof | qsub -
 #PBS -o $outs/$1.$2.$$                
 #PBS -l select=1:ncpus=1:mem=5GB     
 #PBS -l walltime=02:00:00
-#PBS -q dev
+#PBS -q dev_transfer
 #PBS -A CFS-DEV
 #PBS -j oe        
 #PBS -V           

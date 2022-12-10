@@ -1,0 +1,37 @@
+set -eua
+
+date=$1
+dtg=${date}0000  
+year=$(echo $date|cut -c 1-4)
+mnth=$(echo $date|cut -c 5-6)
+yrmd=$(echo $date|cut -c 1-8)
+tzz=t$(echo $date|cut -c 9-10)z
+
+type=SSMI typo=ssmit  merg=no
+
+# copy data from gefs archives
+# ----------------------------
+
+buck=//noaa-reanalyses-pds/observations/atmos/gefsv13_reanalysis-md5/${dtg}/bufr
+file=gdas.$tzz.$typo.tm00.bufr_d  
+set +e
+aws s3 cp s3:$buck/$file gefs.$type.$date  --quiet --no-sign-request --region=us-east-1 
+set -e
+
+# copy data from repro archive  
+# ----------------------------  
+
+prov=EUMETSAT
+buck=//noaa-reanalyses-pds/observations/reprocessed-from-jack/$type/$prov/$year/$mnth/bufr
+file=gdas.$yrmd.$tzz.$typo.tm00.bufr_d
+set +e
+aws s3 cp s3:$buck/$file repr.$type.$date  --quiet --no-sign-request --region=us-east-1 
+set -e
+
+# display contents of the two files 
+# ---------------------------------
+
+set -x
+sinv gefs.$type.$date; rm -f gefs.$type.$date
+sinv repr.$type.$date; rm -f repr.$type.$date
+

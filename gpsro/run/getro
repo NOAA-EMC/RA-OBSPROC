@@ -1,13 +1,15 @@
 set -euax
 
 yrmn=$1; yrm1=$(bumpidx $yrmn -1)
+dest=$2; mkdir -p $dest; cd $dest
 
 for mnth in $yrmn $yrm1; do 
 
-htar $eg5/GPSRO-CHAMP-ROMSAF-BUFR  \*$mnth\*
-htar $ec5/GPSRO-GRACE-ROMSAF-BUFR  \*$mnth\*
-htar $ec5/GPSRO-METOP-ROMSAF-BUFR  \*$mnth\*
-htar $ec5/GPSRO-COSMIC-ROMSAF-BUFR \*$mnth\*
+year=$(echo $mnth|cut -c1-4)
+htar -xvf $eg5/GPSRO-CHAMP-ROMSAF-BUFR   champ/bfr/$year/\*$mnth\*
+htar -xvf $ec5/GPSRO-GRACE-ROMSAF-BUFR   grace/bfr/$year/\*$mnth\*
+htar -xvf $ec5/GPSRO-METOP-ROMSAF-BUFR   metop/bfr/$year/\*$mnth\*
+htar -xvf $ec5/GPSRO-COSMIC-ROMSAF-BUFR cosmic/bfr/$year/\*$mnth\*
 
 done
 

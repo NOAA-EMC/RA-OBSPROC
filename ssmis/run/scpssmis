@@ -1,0 +1,5 @@
+set -euax
+
+mkdir -p $ptmp/fromhera; cd $ptmp/fromhera
+
+scp -r $hera/scratch1/NCEPDEV/stmp2/Jack.Woollen/ssmisdata.2010 .

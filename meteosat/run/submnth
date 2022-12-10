@@ -1,0 +1,5 @@
+set -eua
+
+yrmn=$1
+
+subrun bufrmeto $yrmn $ptmp/meteosat 

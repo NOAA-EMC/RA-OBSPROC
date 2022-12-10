@@ -1,0 +1,17 @@
+set -euax
+
+set +x
+module load awscli/1.16.308
+module list
+set -x
+
+type=$1 prov=$2 yrmn=$3
+year=$(echo $yrmn|cut -c 1-4)
+mnth=$(echo $yrmn|cut -c 5-6)
+buck=s3://noaa-reanalyses-pds/observations/reprocessed-from-jack/$type/$prov/$year/$mnth/bufr
+
+cd $ptmp/$yrmn/$type    
+
+aws s3 cp --profile=rnr-bdp . $buck --recursive --quiet
+
+cd $ptmp; rm -rf $yrmn/$type

@@ -1,6 +1,6 @@
 set -euax
 
-year=$1; dest=$2; mkdir -p $dest; cd $dest
+year=$1; dest=$ptmp/satwnd.$year/goes; mkdir -p $dest; cd $dest
 
 htar -Hnostage -xvf /5year/NCEPDEV/emc-global/Jack.Woollen/GOES-AMV-199501-201307 $year??-GOES-\*             
 

@@ -1,23 +1,31 @@
 set -euax
 
+yrmn=$1
+subd=$PWD
 root=$(cd ..;pwd)
-yrmn=$1; yrml=$(bumpidx $yrmn -1)
-data=$ptmp/ssmidata; mkdir -p $data
+yrml=$(bumpidx $yrmn -1)
+year=$(echo $yrmn|cut -c 1-4)
+data=$ptmp/ssmidata.$year; mkdir -p $data
 runt=$yrmn; source $root/build/build.wc2
 
 dest=$data/dest.$yrmn; rm -rf $dest; mkdir $dest; cd $dest 
 ln -sf $root/fix/ssmit.tab fort.50
+
+# extract the raw data and convert each satellite for this month
+# --------------------------------------------------------------
 
 for mnth in $yrml $yrmn; do
 for file in $(ls $data/SSMI*$mnth); do
 
 dird=$data/dird.$yrmn; rm -rf $dird; mkdir $dird; cd $dird 
 
+set +e
 if [[ $(echo $file|cut -d- -f5) = $yrml ]]; then
  tar --wildcards -xvf $file  \*$(bumpidx ${yrmn}01 -1)\*
 else
  tar -xvf $file 
 fi
+set -e
 
 cd $dest
 
@@ -29,4 +37,21 @@ done
 done
 done
 
-rm -rf $data/dird.$yrmn
+rm -rf $data/dird.$yrmn 
+rm -f  fort.*
+
+# tar up each satellite month in dest - cleanup leftovers
+# -------------------------------------------------------
+
+for sat in $(ls SSMI*$yrmn*|uniq -w13|cut -d'.' -f1-2); do
+tar -cf $sat.$yrmn $sat.$yrmn????
+rm -f $sat.??????????
+done; ls -lh
+
+# combine the satellites for the month and copy the full files to aws
+# -------------------------------------------------------------------
+
+$subd/putssmi $yrmn
+
+
+

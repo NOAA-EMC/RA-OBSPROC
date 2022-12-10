@@ -1,32 +1,70 @@
 #!/usr/bin/env bash
 set -eua
 
-cd $(dirname $0); root=$(cd ..;pwd); compile wc2 
+cd $(dirname $0); root=$(cd ..;pwd)
+module load netcdf/4.7.4
+set -x
+
+
+# parameters for this month
+# -------------------------
 
 yrmn=$1
-data=$2; mkdir -p $data
-dest=$data/dest; rm -rf $dest; mkdir -p $dest
+year=$(echo $yrmn|cut -c 1-4)
+data=$ptmp/ssmisdata.$year
+
+here=$data/here; mkdir -p $here; cd $here
+dird=$here/dird.$yrmn; rm -rf $dird
+mkdir $dird; cd $dird
+
+# parameters for last month
+# -------------------------
 
 yrml=$(bumpidx ${yrmn}    -1)
 ymdl=$(bumpidx ${yrmn}01  -1)
+yeal=$(echo $yrml|cut -c 1-4)
+datl=$ptmp/ssmisdata.$yeal
 
-# stage the data for the month
+# stage the data for last month
+# -----------------------------
 
-cd $data; rm -f BTRin*
-
-for file in SSMIS*$yrml; do
+for file in $datl/SSMIS*$yrml; do
+set +e
 tar --wildcards -xvf $file BTRin$ymdl\*  
+set -e
 done
-for file in SSMIS*$yrmn; do
+
+# stage the data for this month
+# -----------------------------
+
+for file in $data/SSMIS*$yrmn; do
 tar -xvf $file 
 done
 
 # convert the data for the month
+# ------------------------------
 
-cd $dest; cp $root/fix/b021.tab $dest
+mkdir dest; cd dest
+cp $root/fix/b021.tab .
 
-for file in $(ls $data/BTRin*); do
+for file in $(ls $dird/BTRin*); do
 echo $(date) $file
 echo $file | $root/exec/exec_smis_2_gsi
 done
 
+# tarup any of the satellites that were converted
+# -----------------------------------------------
+
+for sat in $(ls SSMIS*$yrmn*|uniq -w13|cut -d'.' -f1-2); do
+echo $(date) tarring $sat; tar -cf $here/$sat.$yrmn $sat.$yrmn????
+done
+
+# combine into DA synoptic files and move to aws
+# ----------------------------------------------
+
+$subd/putawsd $yrmn
+
+# cleanup working space and exit
+# ------------------------------
+
+cd $here; rm -rf $dird

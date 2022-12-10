@@ -1,0 +1,2 @@
+set -euax
+aws s3 ls --profile=rnr-bdp s3:$1 --recursive --human-readable 

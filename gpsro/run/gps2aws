@@ -1,0 +1,83 @@
+set -eua
+
+subd=$PWD
+
+yrmn=$1; year=$(echo $yrmn|cut -c 1-4)
+
+module load awscli/1.16.308
+module list
+
+type=gpsro typo=gpsro  merg=yes
+
+[[ $yrmn < 200701 ]] && merg=no
+
+tard=$ptmp/gpsro.$year/here
+dird=$ptmp/$yrmn/$type; rm -rf $dird; mkdir -p $dird; cd $dird
+buck=//noaa-reanalyses-pds/observations/atmos/gefsv13_reanalysis-md5
+date=${yrmn}0100 dend=${yrmn}3200
+
+# process a month of datasets 
+# ---------------------------
+
+while [[ $date -le $dend ]]; do
+
+tzz=t$(echo $date|cut -c 9-10)z
+
+# copy data from aws archives
+# ---------------------------
+
+if [[ merg = yes ]]; then
+ dtg=${date}0000  
+ file=gdas.$tzz.$typo.tm00.bufr_d  
+ set +e
+ aws s3 cp s3:$buck/${dtg}/bufr/$file gefs.$type.$date  --quiet --no-sign-request --region=us-east-1 
+ set -e
+fi
+
+# copy data from repro archive
+# ----------------------------
+
+dhr=$(echo $date|cut -c 7-10)
+pdy=$(echo $date|cut -c 1-8)
+rm -f repro.$type.$date
+
+for tarf in $tard/$type.*.$yrmn; do
+file=$(basename $tarf)
+set +e
+tar -xvf $tarf $file$dhr 2>/dev/null || continue
+set -e
+cat $file$dhr >> repr.$type.$date
+rm  $file$dhr
+done
+
+# combine repro data on top of gefs data
+# --------------------------------------
+
+set +e
+
+if [[ $merg = yes ]]; then
+ sinvsplt gefs.$type.$date >/dev/null
+ sinvsplt repr.$type.$date >/dev/null
+ cat *.sinv > gdas.$pdy.$tzz.$typo.tm00.bufr_d
+ echo
+ echo gefs; sinv gefs.$type.$date
+ echo repr; sinv repr.$type.$date
+ echo gdas; sinv gdas.$pdy.$tzz.$typo.tm00.bufr_d
+else
+ cp repr.$type.$date gdas.$pdy.$tzz.$typo.tm00.bufr_d
+fi
+
+
+set -e
+
+rm -f *.sinv gefs.$type.$date repr.$type.$date
+
+date=$(bumpidx $date 6)
+done
+
+# copy the month of files to aws 
+# ------------------------------
+
+$subd/putawsy $type EUMETSAT $yrmn
+
+

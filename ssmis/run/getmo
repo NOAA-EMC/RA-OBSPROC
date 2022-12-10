@@ -1,12 +1,17 @@
 set -euax
 
-yrmn=$1; fxx=$2; dest=$ptmp/ssmisdata; mkdir -p $dest; cd $dest
+yrmn=$1; year=$(echo $yrmn|cut -c 1-4)
 
+dest=$ptmp/ssmisdata.$year; mkdir -p $dest; cd $dest
+
+for fxx in F16 F17 F18; do
 [[ $fxx = F16 ]] && htar=SSMIS-F16-CMSAF-NETC-200511-201512
 [[ $fxx = F17 ]] && htar=SSMIS-F17-CMSAF-NETC-200612-201512
 [[ $fxx = F18 ]] && htar=SSMIS-F18-CMSAF-NETC-201003-201512
 
-[[ -s SSMIS-$fxx-CMSAF-NETC-$yrmn ]] && exit
+[[ -s SSMIS-$fxx-CMSAF-NETC-$yrmn ]] && continue
 
 htar -xvf $eg5/$htar SSMIS-$fxx-CMSAF-NETC-$yrmn
+
+done
 

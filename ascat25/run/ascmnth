@@ -11,7 +11,7 @@ export root=$(cd ..; pwd)
 export bush=$root/ush  
 export exec=$root/exec
 export fixt=$root/fix
-export data=$ptmp/ascat25/data  
+export data=$ptmp/ascat25
 export here=$ptmp/ascat25/here; mkdir -p $here
 
 [[ $# -eq 3 ]] && mnths="$3" || mnths="01 02 03 04 05 06 07 08 09 10 11 12"

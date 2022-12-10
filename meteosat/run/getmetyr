@@ -1,8 +1,9 @@
 set -eua
 
-year=$1; dest=$2; mkdir -p $dest; cd $dest
+root=$(cd ..; pwd)
+year=$1; dest=$ptmp/satwnd.$year/meto; mkdir -p $dest; cd $dest
 
-grep $year ../fix/metsats|\
+grep $year $root/fix/metsats|\
 while read line; do
 mfile=$(echo $line|cut -d' ' -f1)
 htar -Hnostage -xvf $ec5/$mfile-CMSAF-NETC \*$year\*
@@ -10,7 +11,7 @@ done
 
 year=$((year-1)); mnth=12
 
-grep $year ../fix/metsats|\
+grep $year $root/fix/metsats|\
 while read line; do
 mfile=$(echo $line|cut -d' ' -f1)
 htar -Hnostage -xvf $ec5/$mfile-CMSAF-NETC \*$year$mnth\*

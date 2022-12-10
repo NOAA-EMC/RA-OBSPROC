@@ -1,0 +1,8 @@
+set -eua
+
+>subfile
+
+for yrmn in $1; do
+for fxx  in $2; do
+subtape getmo $yrmn $fxx 
+done; done

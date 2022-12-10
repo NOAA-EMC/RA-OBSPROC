@@ -1,6 +1,6 @@
 set -euax
 
-year=$1; dest=$2
+year=$1; dest=$ptmp/ssmidata.$year
 yrmn=$(bumpidx ${year}01 -1)
 
 root=$(cd ..;pwd)

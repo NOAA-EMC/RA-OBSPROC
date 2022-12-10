@@ -1,0 +1,11 @@
+set -eua
+
+type=$1
+
+cat adds|grep $type/ > type.list
+
+while read line; do
+[[ $# = 2 ]] && echo git adding
+echo $line         
+[[ $# = 2 ]] && git add $line
+done <type.list

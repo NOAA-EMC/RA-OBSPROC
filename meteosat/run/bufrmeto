@@ -6,9 +6,13 @@ tabl=$root/fix/satwnd.tab
 module load netcdf/4.7.4
 
 yrmn=$1; yrm1=$(bumpidx $yrmn -1)
-data=$2; prnt=${3:-prnt}
+year=$(echo $yrmn|cut -c 1-4)
+data=$ptmp/satwnd.$year/meto
+arch=$ptmp/satwnd.$year
+prnt=${3:-prnt}
 
 # setup individual data files for the month in dird
+# -------------------------------------------------
 
 dird=$data/dird.$yrmn
 rm -rf    $dird
@@ -17,11 +21,14 @@ cd        $dird
 
 for yymm in $yrm1 $yrmn; do 
 for file in $(ls $data/M*$yymm*tgz); do
+set +e
 [[ $yymm = $yrm1 ]] && tar --wildcards -zxf $file \*$(bumpidx ${yrmn}01 -1)\*
+set -e
 [[ $yymm = $yrmn ]] && tar --wildcards -zxf $file
 done;done
 
-# translate the netcdf into bufr in dest
+# translate the netcdf into bufr into dest
+# ----------------------------------------
 
 dest=$data/dest.$yrmn
 rm -rf    $dest
@@ -39,5 +46,12 @@ $prnt
 eof
 done
 
-rm -rf $dird
+# tar up each satellite month in dest - cleanup leftovers
+# -------------------------------------------------------
+
+for sat in $(ls satwnd*$yrmn*|uniq -w13|cut -d'.' -f1-2); do
+tar -cf $arch/$sat.$yrmn $sat.$yrmn????
+done
+
+cd $arch; rm -rf $dird $dest
 

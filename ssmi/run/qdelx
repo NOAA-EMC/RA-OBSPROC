@@ -1,0 +1,10 @@
+set -eua
+
+tag=$1
+
+qs|grep $tag >qdelx.tags
+
+while read line; do
+job=$(echo $line|cut -d' ' -f1)
+qdel $job
+done<qdelx.tags
