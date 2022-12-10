@@ -1,0 +1,12 @@
+set -euax
+
+date=$1
+
+type=satwnd
+dtg=${date}0000  
+tzz=t$(echo $date|cut -c 9-10)z
+file=gdas.$tzz.$type.tm00.bufr_d  
+buck=//noaa-reanalyses-pds/observations/atmos/gefsv13_reanalysis-md5
+
+aws s3 cp s3:$buck/${dtg}/bufr/$file $type.gefs.$date   --profile=rnr-bdp  --quiet ### --no-sign-request --region=us-east-1 
+

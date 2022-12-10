@@ -1,0 +1,11 @@
+set -ua
+
+yrmn=$1                 
+
+date=${1}0100 dend=${1}3200
+
+while [[ $date -le $dend ]]; do
+getaws $date 
+[[ -s awsd.satwnd.$date ]] || echo missing $date 
+date=$(bumpidx $date 6)
+done

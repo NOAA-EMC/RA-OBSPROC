@@ -1,0 +1,50 @@
+set -eua
+
+yrmn=$1; [[ $yrmn > 199912 ]] && exit 99
+
+module load awscli/1.16.308
+module list
+set -x
+
+year=$(echo $yrmn|cut -c 1-4)
+type=satwnd typo=satwnd merg=yes 
+dird=$ptmp/$yrmn/$type; rm -rf $dird; mkdir -p $dird; cd $dird
+date=${yrmn}0100 dend=${yrmn}3200
+
+# process a month of datasets 
+# ---------------------------
+
+while [[ $date -le $dend ]]; do
+
+dhr=$(echo $date|cut -c 7-10)
+pdy=$(echo $date|cut -c 1-8)
+tzz=t$(echo $date|cut -c 9-10)z
+
+# merge data from repro archive
+# -----------------------------
+
+for sorc in REAN JMAR MET GOES; do
+for tarf in $ptmp/satwnd.$year/satwnd.$sorc*.$yrmn; do
+file=$(basename $tarf)
+set +e
+tar -xf $tarf $file$dhr 2>/dev/null || continue
+set -e
+sinvsplt $file$dhr 
+#rm  $file$dhr
+done
+done
+
+cat *.sinv > gdas.$pdy.$tzz.$typo.tm00.bufr_d
+binv gdas.$pdy.$tzz.$typo.tm00.bufr_d
+sinv gdas.$pdy.$tzz.$typo.tm00.bufr_d
+rm -f *.sinv 
+
+date=$(bumpidx $date 6)
+done
+
+# copy the month of files to aws 
+# ------------------------------
+
+#$SUBDIR/putawsy $type EUMETSAT $yrmn
+
+

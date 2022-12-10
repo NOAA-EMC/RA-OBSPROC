@@ -1,0 +1,1 @@
+aws s3 ls --profile=rnr-bdp s3://noaa-reanalyses-pds/observations/reanalysis/amv/satwnd/$1 --recursive --human-readable

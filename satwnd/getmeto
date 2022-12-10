@@ -1,0 +1,6 @@
+set -euax
+
+cd /lfs/h2/emc/global/noscrub/Jack.Woollen/RA-OBSPROC/meteosat/run
+
+year=$1; getmetyr $year
+

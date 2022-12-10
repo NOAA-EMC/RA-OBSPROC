@@ -1,0 +1,21 @@
+#!/bin/bash
+set -euax
+
+outs=$PWD/outputs; mkdir -p $outs
+
+cat<<eof | qsub -
+#PBS -N $1.$2                  
+#PBS -o $outs/$1.$2.$$                
+#PBS -l select=1:ncpus=1:mem=5GB     
+#PBS -l walltime=06:00:00
+#PBS -q dev_transfer
+#PBS -A CFS-DEV
+#PBS -j oe        
+#PBS -V           
+
+set -euax  
+
+SUBDIR=$PWD; cd $PWD; time $*
+
+eof
+

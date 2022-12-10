@@ -1,0 +1,6 @@
+set -euax
+
+cd /lfs/h2/emc/global/noscrub/Jack.Woollen/RA-OBSPROC/goesamv/run
+
+year=$1; getyear $year
+

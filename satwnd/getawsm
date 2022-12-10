@@ -1,0 +1,10 @@
+set -eua
+
+date=$1
+yrmd=$(echo $date|cut -c 1-8)
+year=$(echo $date|cut -c 1-4)
+mnth=$(echo $date|cut -c 5-6)
+tzz=t$(echo $date|cut -c 9-10)z
+
+echo copy $year/$mnth/bufr/gdas.$yrmd.$tzz.satwnd.tm00.bufr_d  \>\> awsd.satwnd.$date
+cpaws $year/$mnth/bufr/gdas.$yrmd.$tzz.satwnd.tm00.bufr_d  awsd.satwnd.$date

@@ -1,0 +1,5 @@
+set -eua
+
+aws s3 cp --profile=rnr-bdp s3://noaa-reanalyses-pds/observations/reanalysis/amv/satwnd/$1 $2 --quiet
+
+##--quiet --no-sign-request --region=us-east-1

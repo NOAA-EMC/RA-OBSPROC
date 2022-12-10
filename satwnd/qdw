@@ -1,0 +1,12 @@
+set -eua
+
+jname=$1
+
+qs|grep $jname>qsname.list
+
+while read line; do
+jobid=$(echo $line|cut -d' ' -f1)
+qdel $jobid
+done<qsname.list
+
+

@@ -1,0 +1,9 @@
+set -euax
+
+##cwb sinvsatw
+
+file=$1
+
+cat<<eof|sinvsatw.x
+$file
+eof

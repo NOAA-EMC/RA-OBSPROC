@@ -1,0 +1,7 @@
+set -euax
+
+rdir=$1
+
+buck=//noaa-reanalyses-pds/observations/reprocessed-from-jack/amv/MERG
+
+aws s3 rm --profile=rnr-bdp s3:$buck/$rdir  --recursive

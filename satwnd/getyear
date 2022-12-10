@@ -1,0 +1,9 @@
+set -euax
+
+year=$1
+
+subtape getmeto $year
+subtape getgoes $year
+subtape getjmar $year
+subtape getrean $year
+

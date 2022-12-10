@@ -1,0 +1,43 @@
+set -eua
+
+year=$1
+
+PATH=$PWD/plots:$PATH # need path to sinvsatw process
+mkdir -p $ptmp/satwnd.$year/rean; cd $ptmp/satwnd.$year/rean
+
+# tar out the SATWND year if interest 
+
+htar -xvf $eg5/REAN_SATWND_dumpbufr_1973_2000  REAN_SATWND_dumpbufr_$year
+
+# tar out the SATWND months for this year
+
+tar -xvf REAN_SATWND_dumpbufr_$year; rm REAN_SATWND_dumpbufr_$year
+
+# process each SATWND month - rename days - add sat IDs - retar for use in merging
+
+for mnth in $(ls REAN_SATWND_dumpbufr_$year*); do
+yrmn=$(echo $mnth|cut -d'_' -f4)
+tar -xf $mnth; rm $mnth
+
+# rename the SATWND days
+
+for file in $(ls REAN_SATWND_dumpbufr_$yrmn*); do
+date=$(echo $file|cut -d'_' -f4)
+mv $file satwnd.REAN.$date  
+done
+
+# add in the satID's in the SATWND days
+
+for file in $(ls satwnd*); do
+sinvsatw $file
+mv $file.said $file
+done
+
+# retar the processed SATWND days for merging
+
+echo makeing $ptmp/satwnd.$year/satwnd.REAN.$yrmn
+tar -cf $ptmp/satwnd.$year/satwnd.REAN.$yrmn satwnd.REAN.$yrmn????
+rm satwnd.REAN.$yrmn????
+
+done # end of SATWND months loop
+

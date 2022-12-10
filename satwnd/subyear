@@ -1,0 +1,7 @@
+set -euax
+
+year=$1
+
+submeto $year
+
+subgoes $year

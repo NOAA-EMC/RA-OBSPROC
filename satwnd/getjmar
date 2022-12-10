@@ -1,0 +1,22 @@
+set -eua
+
+year=$1; mkdir -p $ptmp/satwnd.$year/jmar; cd $ptmp/satwnd.$year/jmar
+
+htar -xvf $eg5/JMAR_SATWND_dumpbufr_1987_2003  JMAR_SATWND_dumpbufr_$year
+
+tar -xvf JMAR_SATWND_dumpbufr_$year; rm JMAR_SATWND_dumpbufr_$year
+
+for mnth in $(ls JMAR_SATWND_dumpbufr_$year*); do
+yrmn=$(echo $mnth|cut -d'_' -f4)
+tar -xf $mnth; rm $mnth
+
+for file in $(ls JMAR_SATWND_dumpbufr_$yrmn*); do
+date=$(echo $file|cut -d'_' -f4)
+mv $file satwnd.JMAR.$date  
+done
+
+echo makeing $ptmp/satwnd.$year/satwnd.JMAR.$yrmn
+tar -cf $ptmp/satwnd.$year/satwnd.JMAR.$yrmn satwnd.JMAR.$yrmn????
+rm satwnd.JMAR.$yrmn????
+done
+

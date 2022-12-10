@@ -1,0 +1,5 @@
+set -euax
+
+buck=s3://noaa-reanalyses-pds/observations/reprocessed-from-jack/amv/MERG
+
+aws s3 ls --profile=rnr-bdp $buck/$1 --recursive --human-readable

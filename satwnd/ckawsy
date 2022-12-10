@@ -1,0 +1,8 @@
+set -eua
+
+year=$1 yend=2020
+
+while [[ $year -le $yend ]]; do
+echo $year $(aws s3 ls --profile=rnr-bdp s3://noaa-reanalyses-pds/observations/reanalysis/amv/satwnd/$year --recursive|wc -l)
+year=$((year+1))
+done
