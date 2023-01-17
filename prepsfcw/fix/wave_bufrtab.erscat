@@ -14,20 +14,19 @@
 | HOUR     | 004004 | HOUR                                                     |
 | MINU     | 004005 | MINUTE                                                   |
 | SECO     | 004006 | SECOND                                                   |
-|          |        |                                                          |
 | CLAT     | 005002 | LATITUDE (COARSE ACCURACY)                               |
-|          |        |                                                          |
 | CLON     | 006002 | LONGITUDE (COARSE ACCURACY)                              |
-|          |        |                                                          |
 | WD10     | 011011 | WIND DIRECTION AT 10 M                                   |
 | WS10     | 011012 | WIND SPEED AT 10 M                                       |
+| SAID     | 001007 | Satellite identifier                                     |
+
 |          |        |                                                          |
 |------------------------------------------------------------------------------|
 | MNEMONIC | SEQUENCE                                                          |
 |----------|-------------------------------------------------------------------|
 |          |                                                                   |
-| NC012008 | YEAR     MNTH     DAYS     HOUR     MINU     SECO     CLAT        |
-| NC012008 | CLON     WD10     WS10     RPID                                   |
+| NC012008 | RPID     SAID     YEAR     MNTH     DAYS     HOUR     MINU        |
+| NC012008 | SECO     CLAT     CLON     WD10     WS10     RPID     SAID        |
 |          |                                                                   |
 |------------------------------------------------------------------------------|
 | MNEMONIC | SCAL | REFERENCE   | BIT | UNITS                    |-------------|
@@ -44,5 +43,7 @@
 | CLON     |    2 |      -18000 |  16 | DEGREES                  |-------------|
 | WD10     |    0 |           0 |   9 | DEGREES TRUE             |-------------|
 | WS10     |    1 |           0 |  12 | M/S                      |-------------|
+| SAID     |    0 |           0 |  10 | CODE TABLE               |-------------|
 |          |      |             |     |                          |-------------|
 `------------------------------------------------------------------------------'
+

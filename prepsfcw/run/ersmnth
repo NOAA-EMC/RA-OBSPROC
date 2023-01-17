@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -eua
+
+#  define the infrastructure
+#  -------------------------
+
+export yrmn=$1
+export inst=erscat 
+export year=$(echo $yrmn|cut -c 1-4)
+export root=$(cd ..; pwd)
+export bush=$root/ush  
+export exec=$root/exec
+export fixt=$root/fix
+export data=$ptmp/prepsfcw.$year
+
+#  set up the work area
+#  --------------------
+
+work=$data/work.$inst.$yrmn; rm -rf $work; mkdir -p $work; cd $work
+echo $(date) creating $work 
+prep=$data/prepdata.$yrmn; mkdir -p $prep
+echo $(date) creating $prep 
+
+#  untar the monthly data required
+#  -------------------------------
+
+ymdf=${yrmn}01
+yrml=$(bumpidx $yrmn -1)
+ymdl=$(bumpidx $ymdf -1)
+
+set +e; tar --wildcards -xf $data/ERSWND-CMSAF-BUFR-$yrml.tgz OR1ERW025_$ymdl\* >/dev/null 2>&1
+set -e; tar --wildcards -xf $data/ERSWND-CMSAF-BUFR-$yrmn.tgz OR1ERW025_$yrmn\*
+
+#  reformat and rebin the ERS data by synoptic time
+#  ------------------------------------------------
+
+cat OR1ERW025* > OR1ERW025.$yrmn.cat
+ln -sf OR1ERW025.$yrmn.cat         fort.20
+ln -sf $fixt/wave_bufrtab.erscat   fort.50
+$exec/erscat 
+
+#  clean up the work directory
+#  ---------------------------
+
+mv $inst.eums.$yrmn* $prep
+cd $data; rm -rf $work      
+
+

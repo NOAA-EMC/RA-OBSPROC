@@ -1,0 +1,12 @@
+set -eua
+
+date=$1
+yrmd=$(echo $date|cut -c 1-8)
+year=$(echo $date|cut -c 1-4)
+mnth=$(echo $date|cut -c 5-6)
+tzz=t$(echo $date|cut -c 9-10)z
+
+buck=s3://noaa-reanalyses-pds/observations/reanalysis/conv/prepbufr/$year/$mnth/prepbufr/gdas.$yrmd.$tzz.prepfur.nr 
+
+aws s3 cp $buck prepbufr.cbkt.$date --quiet   --profile=rnr-bdp
+

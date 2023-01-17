@@ -1,0 +1,7 @@
+set -euax
+
+cwb spltsubs -free
+
+mkdir -p ../../exec
+
+mv spltsubs.x ../../exec

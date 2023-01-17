@@ -1,0 +1,141 @@
+.------------------------------------------------------------------------------.
+| ------------   USER DEFINITIONS FOR TABLE-A TABLE-B TABLE D   -------------- |
+|------------------------------------------------------------------------------|
+| MNEMONIC | NUMBER | DESCRIPTION                                              |
+|----------|--------|----------------------------------------------------------|
+|          |        |                                                          |
+| NC012001 | A61201 | MESSAGE TYPE 012-001  SSM/I - Brightness Temperatures    |
+| NC012002 | A61202 | MESSAGE TYPE 012-002  SSM/I - Derived Products           |
+| NC012103 | A61212 | MESSAGE TYPE 012-103  SSM/I - Neural Net 3 Products      |
+|          |        |                                                          |
+| SEQSCN   | 361140 | SSM/I SATELLITE ID; SCAN, ORBIT, POSITION NO. SEQUENCE   |
+| SEQBRT   | 361141 | SSM/I BRIGHTNESS TEMP DELAYED REPLICATION SEQUENCE       |
+| SEQPRD   | 361142 | SSM/I PRODUCTS DELAYED REPLICATION SEQUENCE              |
+| SEQADD   | 361143 | SSM/I ADDITIONAL PRODUCTS SEQUENCE                       |
+| SEQRFL   | 361144 | SSM/I RAIN FLAG SEQUENCE                                 |
+| SQRBRT   | 361145 | SSM/I BRIGHTNESS TEMPERATURE REPLICATION SEQUENCE        |
+| SQRPRD   | 361146 | SSM/I PRODUCTS REPLICATION SEQUENCE                      |
+| SEQWSP   | 361147 | SSM/I OCEAN WIND SPEED DELAYED REPLICATION SEQUENCE      |
+| SEQTPW   | 361148 | SSM/I TOTAL PRECIP. WATER DELAYED REPLICATION SEQUENCE   |
+| SEQRFR   | 361149 | SSM/I RAINFALL (AVG RATE) DELAYED REPLICATION SEQUENCE   |
+| SEQTSK   | 361150 | SSM/I SKIN TEMPERATURE DELAYED REPLICATION SEQUENCE      |
+| SEQCLW   | 361151 | SSM/I CLOUD WATER DELAYED REPLICATION SEQUENCE           |
+| SEQSMO   | 361152 | SSM/I SOIL MOISTURE DELAYED REPLICATION SEQUENCE         |
+| SEQSND   | 361153 | SSM/I SNOW DEPTH DELAYED REPLICATION SEQUENCE            |
+| SEQSST   | 361229 | SSM/I SEA-SURFACE TEMP DELAYED REPLICATION SEQUENCE      |
+|          |        |                                                          |
+| SAID     | 001007 | SATELLITE IDENTIFIER                                     |
+| RPID     | 001198 | REPORT IDENTIFIER                                        |
+| YEAR     | 004001 | YEAR                                                     |
+| MNTH     | 004002 | MONTH                                                    |
+| DAYS     | 004003 | DAY                                                      |
+| HOUR     | 004004 | HOUR                                                     |
+| MINU     | 004005 | MINUTE                                                   |
+| SECO     | 004006 | SECOND                                                   |
+| CLAT     | 005002 | LATITUDE (COARSE ACCURACY)                               |
+| ORBN     | 005040 | ORBIT NUMBER                                             |
+| CHNM     | 005042 | CHANNEL NUMBER                                           |
+| SCNN     | 005201 | SCAN NUMBER                                              |
+| POSN     | 005202 | POSITION NUMBER                                          |
+| CLON     | 006002 | LONGITUDE (COARSE ACCURACY)                              |
+| METFET   | 008011 | METEOROLOGICAL FEATURE                                   |
+| ACAV     | 008022 | TOTAL NUMBER(WITH RESPECT TO ACCUMULATION OR AVERAGE)    |
+| FOST     | 008023 | FIRST ORDER STATISTICS                                   |
+| WSPD     | 011002 | WIND SPEED (OCEAN SURFACE)                               |
+| TMSK     | 012161 | SKIN TEMPERATURE (SURFACE)                               |
+| TMBR     | 012163 | BRIGHTNESS TEMPERATURE                                   |
+| TOSD     | 013013 | SNOW DEPTH                                               |
+| REQV     | 013014 | RAINFALL/WATER EQUIVALENT OF SNOW (AVERAGE RATE)         |
+| TPWT     | 013016 | TOTAL PRECIPITABLE WATER                                 |
+| SMOI     | 013197 | SOIL MOISTURE                                            |
+| ICON     | 020208 | ICE CONCENTRATION                                        |
+| ICAG     | 020209 | ICE AGE                                                  |
+| ICED     | 020210 | ICE EDGE                                                 |
+| SFTP     | 020216 | CALCULATED SURFACE TYPE                                  |
+| SFTG     | 020217 | SURFACE TAG                                              |
+| VILWC    | 021031 | VERTICALLY-INTEGRATED LIQUID WATER CONTENT               |
+| SST1     | 022043 | SEA SURFACE TEMPERATURE                                  |
+| RFLG     | 033217 | RAIN FLAG (WIND QUALITY INDICATOR)                       |
+| NMCT     | 055006 | NMC REPORT TYPE                                          |
+|          |        |                                                          |
+|------------------------------------------------------------------------------|
+| MNEMONIC | SEQUENCE                                                          |
+|----------|-------------------------------------------------------------------|
+|          |                                                                   |
+| NC012001 | RPID  YEAR  MNTH  DAYS  HOUR  MINU  SECO  CLAT  CLON  NMCT  ACAV  |
+| NC012001 | <SEQSCN>  {SEQBRT}                                                |
+|          |                                                                   |
+| NC012002 | RPID  YEAR  MNTH  DAYS  HOUR  MINU  SECO  CLAT  CLON  NMCT  ACAV  |
+| NC012002 | <SEQSCN>  <SEQPRD>  <SEQADD>                                      |
+|          |                                                                   |
+| NC012103 | RPID  YEAR  MNTH  DAYS  HOUR  MINU  SECO  CLAT  CLON  NMCT  ACAV  |
+| NC012103 | <SEQSCN>  <SEQPRD>                                                |
+|          |                                                                   |
+| SEQSCN   | SAID  ORBN  SCNN  POSN                                            |
+|          |                                                                   |
+| SEQBRT   | TMBR                                                              |
+|          |                                                                   |
+| SEQPRD   | "SQRPRD"2                                                         |
+|          |                                                                   |
+| SEQADD   | SFTG  ICON  ICAG  ICED  SFTP                                      |
+|          |                                                                   |
+| SEQRFL   | RFLG                                                              |
+|          |                                                                   |
+| SQRPRD   | FOST  WSPD  202129  201132  TPWT  201000  202000  202130  201134  |
+| SQRPRD   | REQV  201000  202000                                              |
+|          |                                                                   |
+| SEQWSP   | WSPD                                                              |
+|          |                                                                   |
+| SEQTPW   | 202129  201132  TPWT  201000  202000                              |
+|          |                                                                   |
+| SEQRFR   | 202130  201134  REQV  201000  202000                              |
+|          |                                                                   |
+| SEQTSK   | TMSK                                                              |
+|          |                                                                   |
+| SEQCLW   | METFET  202130  201133  VILWC  201000  202000  METFET             |
+|          |                                                                   |
+| SEQSMO   | SMOI                                                              |
+|          |                                                                   |
+| SEQSND   | 202129  201132  TOSD  201000  202000                              |
+|          |                                                                   |
+| SEQSST   | SST1                                                              |
+|          |                                                                   |
+|------------------------------------------------------------------------------|
+| MNEMONIC | SCAL | REFERENCE   | BIT | UNITS                    |-------------|
+|----------|------|-------------|-----|--------------------------|-------------|
+|          |      |             |     |                          |-------------|
+| SAID     |    0 |           0 |  10 | CODE TABLE               |-------------|
+| RPID     |    0 |           0 |  64 | CCITT IA5                |-------------|
+| YEAR     |    0 |           0 |  12 | YEAR                     |-------------|
+| MNTH     |    0 |           0 |   4 | MONTH                    |-------------|
+| DAYS     |    0 |           0 |   6 | DAY                      |-------------|
+| HOUR     |    0 |           0 |   5 | HOUR                     |-------------|
+| MINU     |    0 |           0 |   6 | MINUTE                   |-------------|
+| SECO     |    0 |           0 |   6 | SECOND                   |-------------|
+| CLAT     |    2 |       -9000 |  15 | DEGREES                  |-------------|
+| ORBN     |    0 |           0 |  24 | NUMERIC                  |-------------|
+| CHNM     |    0 |           0 |   6 | NUMERIC                  |-------------|
+| SCNN     |    0 |           0 |  14 | NUMERIC                  |-------------|
+| POSN     |    0 |           0 |  10 | NUMERIC                  |-------------|
+| CLON     |    2 |      -18000 |  16 | DEGREES                  |-------------|
+| METFET   |    0 |           0 |   6 | CODE TABLE               |-------------|
+| ACAV     |    0 |           0 |  16 | NUMERIC                  |-------------|
+| FOST     |    0 |           0 |   6 | CODE TABLE               |-------------|
+| WSPD     |    1 |           0 |  12 | M / SEC                  |-------------|
+| TMSK     |    2 |           0 |  16 | KELVIN                   |-------------|
+| TMBR     |    2 |           0 |  16 | KELVIN                   |-------------|
+| TOSD     |    2 |          -2 |  16 | METER                    |-------------|
+| REQV     |    4 |           0 |  12 | KG/((METER**2)*SECOND)   |-------------|
+| TPWT     |    0 |           0 |   7 | KG/(METER**2)            |-------------|
+| SMOI     |    3 |           0 |   8 | METER                    |-------------|
+| ICON     |    0 |           0 |   7 | PERCENT                  |-------------|
+| ICAG     |    0 |           0 |   2 | CODE TABLE               |-------------|
+| ICED     |    0 |           0 |   2 | CODE TABLE               |-------------|
+| SFTP     |    0 |           0 |   5 | CODE TABLE               |-------------|
+| SFTG     |    0 |           0 |   3 | CODE TABLE               |-------------|
+| VILWC    |    0 |           0 |   7 | KG/(METER**2)            |-------------|
+| SST1     |    2 |           0 |  15 | KELVIN                   |-------------|
+| RFLG     |    0 |           0 |   3 | CODE TABLE               |-------------|
+| NMCT     |    0 |           0 |  10 | CODE TABLE               |-------------|
+|          |      |             |     |                          |-------------|
+`------------------------------------------------------------------------------'

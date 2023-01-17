@@ -1,0 +1,31 @@
+set -euax
+
+year=$(echo $1|cut -c 1-4); yrm1=$(bumpidx ${year}01 -1)
+dest=$ptmp/prepsfcw.$year; mkdir -p $dest; cd $dest
+
+ascatw=/5year/NCEPDEV/emc-global/Jack.Woollen/ASCAT25-METOP-UMSDS-BUFR-200701-201403
+htar -xvf $ascatw  ASCAT25-METOP-UMSDS-BUFR-$yrm1 ASCAT25-METOP-UMSDS-BUFR-$year\*
+
+erscat=/5year/NCEPDEV/emc-global/Jack.Woollen/ERSCAT-ERS12-UMSDS-BUFR-199203-199912  
+htar -xvf $erscat  ERSWND-CMSAF-BUFR-$yrm1\*     ERSWND-CMSAF-BUFR-$year\*              
+
+exit 00
+
+cat<<eof>ssmilist
+SSMI-F08-CMSAF-NETC-198707-199112
+SSMI-F10-CMSAF-NETC-199101-199711
+SSMI-F11-CMSAF-NETC-199201-199912
+SSMI-F13-CMSAF-NETC-199505-200812
+SSMI-F14-CMSAF-NETC-199705-200808
+SSMI-F15-CMSAF-NETC-200002-200607
+eof
+
+while read line; do
+echo $line
+yrma=$(echo $line|cut -d'-' -f5|cut -c 1-4)
+yrmb=$(echo $line|cut -d'-' -f6|cut -c 1-4)
+file=$(echo $line|cut -d'-' -f 1-4)
+[[ $year -ge $yrma && $year -le $yrmb ]] && htar -xvf $eg5/$line $file-$yrm1 $file-$year\*
+done <ssmilist
+
+

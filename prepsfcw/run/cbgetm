@@ -1,0 +1,12 @@
+set -eua
+
+yrmn=$1 type=$2 name=$3 dname=$3
+year=$(echo $yrmn|cut -c 1-4)
+mnth=$(echo $yrmn|cut -c 5-6)
+
+[[ $type = ssmi && $name = eumetsat ]] && dname=ssmit
+
+buck=s3://noaa-reanalyses-pds/observations/reanalysis/$type/$name/$year/$mnth/bufr
+
+aws s3 cp  $buck --recursive  --profile=rnr-bdp  
+

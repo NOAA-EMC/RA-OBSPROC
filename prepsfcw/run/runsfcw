@@ -1,0 +1,36 @@
+set -eua
+
+year=$1
+
+getally $year
+
+here=$PWD; outs=$PWD/outputs; mkdir -p $outs
+
+for mnth in 01 ;do ##02 03 04 05 06 07 08 09 10 11 12; do
+
+yrmn=$year$mnth
+
+cat<<eof | qsub -
+#PBS -N runsfcw.$year$mnth     
+#PBS -o $outs/runsfcw.$year$mnth.$$   
+#PBS -l select=1:ncpus=1:mem=5GB     
+#PBS -l walltime=06:00:00
+#PBS -q dev_transfer
+#PBS -A CFS-DEV
+#PBS -j oe        
+#PBS -V           
+
+set -euax  
+
+set +x
+module load netcdf/4.7.4
+set -x
+
+cd $here
+[[ $yrmn -ge 198707 && $yrmn -le 200812 ]] && time spsmnth $yrmn   
+[[ $yrmn -ge 199203 && $yrmn -le 199912 ]] && time ersmnth $yrmn     
+[[ $yrmn -ge 200701 && $yrmn -le 201403 ]] && time ascmnth $yrmn     
+[[ $yrmn -ge 199001 && $yrmn -le 201403 ]] && time prepmnth $yrmn
+eof
+
+done

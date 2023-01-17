@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+set -eua
+
+#  define the infrastructure
+#  -------------------------
+
+export yrmn=$1
+export inst=spssmi 
+export year=$(echo $yrmn|cut -c 1-4)
+export mnth=$(echo $yrmn|cut -c 5-6)
+export root=$(cd ..; pwd)
+export bush=$root/ush  
+export exec=$root/exec
+export fixt=$root/fix
+export data=$ptmp/prepsfcw.$year
+
+#  set up the work area
+#  --------------------
+
+work=$data/work.$inst.$yrmn; rm -rf $work; mkdir -p $work; cd $work
+echo $(date) creating $work 
+prep=$data/prepdata.$yrmn; mkdir -p $prep
+echo $(date) creating $prep 
+
+#  download the inputs for prepssmi
+#  --------------------------------
+
+type=ssmi
+name=eumetsat
+buck=s3://noaa-reanalyses-pds/observations/reanalysis/$type/$name/$year/$mnth/bufr
+
+set -x
+aws s3 cp $buck . --recursive  --profile=rnr-bdp --quiet
+htar -Hnostage -xf EMC/Reanalysis/dumps.org/dumps.$yrmn $yrmn\*/gdas/sstgrb\*.r2
+set +x
+
+mv $yrmn*/gdas/*r2 .
+rm -rf $yrmn*
+
+#  process the mnth into spssmi sfcwinfs
+#  -------------------------------------
+
+echo $(date) process the ssmit into spssmi winds
+
+date=${yrmn}01 dend=${yrmn}32
+while [[ $date -le $dend ]]; do
+for hh in 00 06 12 18; do
+datetime=$date.t${hh}z
+
+#  put the double date header on the ssmit file
+#  --------------------------------------------
+
+[[ -s gdas.$datetime.ssmit.tm00.bufr_d ]] || { echo missing $date$hh; continue; }
+
+cat<<eof|$exec/dates
+$date$hh
+gdas.$datetime.ssmit.tm00.bufr_d
+ssmit.eums.$date$hh
+eof
+
+#  run the neural net code ssmit >> spssmi
+#  ---------------------------------------
+
+ln -sf $fixt/spssmi.tab.new   fort.20
+ln -sf $fixt/prepobs_landc    fort.25
+ln -sf ssmit.eums.$date$hh    fort.31
+ln -sf $inst.eums.$date$hh   fort.51
+XLFUNIT_27=sstgrb.gdas.$date$hh.r2
+
+cat $fixt/prepobs_prepssmi.fnl.parm|$exec/prepobs_prepssmi >prepssmi.out
+
+done
+date=$(bumpidx $date 1)
+done
+
+#  clean out the work directory
+#  ---------------------------
+
+cp $inst.eums.$yrmn* $prep                
+cd $data; rm -rf $work 
+
+

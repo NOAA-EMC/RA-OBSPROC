@@ -1,0 +1,18 @@
+set -euax
+
+yrmn=199301
+
+cd /lfs/h2/emc/ptmp/Jack.Woollen/prepsfcw.1993/work.prepbufr.199301/save
+
+# copy the month of files to aws 
+# ------------------------------
+
+year=$(echo $yrmn|cut -c 1-4)
+mnth=$(echo $yrmn|cut -c 5-6)
+buck=s3://noaa-reanalyses-pds/observations/reanalysis/conv/prepbufr/$year/$mnth/prepbufr_reprocessed_v1.0
+
+set -x
+aws s3 cp . $buck --recursive --profile=rnr-bdp ##--quiet
+set +x
+
+

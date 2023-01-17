@@ -1,0 +1,129 @@
+#!/usr/bin/env ksh 
+set -eua
+
+#  define the infrastructure
+#  -------------------------
+
+export yrmn=$1
+export inst=prepbufr
+export year=$(echo $yrmn|cut -c 1-4)
+export mnth=$(echo $yrmn|cut -c 5-6)
+export root=$(cd ..; pwd)
+export bush=$root/ush  
+export exec=$root/exec
+export fixt=$root/fix
+export data=$ptmp/prepsfcw.$year
+
+#  set up the work area
+#  --------------------
+
+work=$data/work.$inst.$yrmn; rm -rf $work; mkdir -p $work; cd $work; mkdir save
+echo $(date) creating $work and save
+prep=$data/prepdata.$yrmn
+
+#  define some prepdata parameters
+#  -------------------------------
+
+PRPX=/apps/ops/prod/nco/intel/19.1.3.304/prepobs.v1.0.0/exec/prepobs_prepdata
+PRVT=/lfs/h1/ops/prod/com/gfs/v16.3/fix/prepobs_errtable.global
+PRPT=/apps/ops/prod/nco/intel/19.1.3.304/prepobs.v1.0.0/fix/prepobs_prep.bufrtable
+LANDC=/apps/ops/prod/nco/intel/19.1.3.304/prepobs.v1.0.0/fix/prepobs_landc
+
+echo " &task mp_process=0 /"  > prepdata.stdin
+cat $fixt/prepbufr.stdin     >> prepdata.stdin
+
+#  process the mnth of data
+#  ------------------------
+
+date=${yrmn}0100 dend=${yrmn}3218
+
+while [[ $date -le $dend ]]; do
+
+datetime=$(echo $date|cut -c 1-8).t$(echo $date|cut -c 9-10)z
+echo "      $date" > cdate10.dat
+echo $(date) making prepbufr $date
+
+#  define the BUFRLIST array (empty) files
+#  ---------------------------------------
+
+BUFRLIST="adpupa aircar aircft satwnd proflr vadwnd rassda adpsfc sfcshp sfcbog msonet spssmi erscat qkswnd wdsatr ascatw rtovs atovs goesnd gpsipw"
+set -A infile `echo $BUFRLIST` # this works on all platforms
+for name in $BUFRLIST; do
+[[ -e $name ]] && rm $name; >$name
+done
+
+#  make links for the data files to process
+#  ----------------------------------------
+
+[[ -s $prep/spssmi.eums.$date ]] && ln -sf $prep/spssmi.eums.$date  spssmi
+[[ -s $prep/erscat.eums.$date ]] && ln -sf $prep/erscat.eums.$date  erscat
+[[ -s $prep/ascatw.eums.$date ]] && ln -sf $prep/ascatw.eums.$date  ascatw
+
+#  file assignments for prepdata
+#  -----------------------------
+
+export FORT5=prepdata.stdin 
+export FORT11=cdate10.dat
+export FORT12=$PRPT
+export FORT15=$LANDC
+export FORT20=$PRVT
+export FORT21=$work/${infile[0]}
+export FORT22=$work/${infile[1]}
+export FORT23=$work/${infile[2]}
+export FORT24=$work/${infile[3]}
+export FORT25=$work/${infile[4]}
+export FORT26=$work/${infile[5]}
+export FORT27=$work/${infile[6]}
+export FORT31=$work/${infile[7]}
+export FORT32=$work/${infile[8]}
+export FORT33=$work/${infile[9]}
+export FORT34=$work/${infile[10]}
+export FORT35=$work/${infile[11]}
+export FORT36=$work/${infile[12]}
+export FORT37=$work/${infile[13]}
+export FORT38=$work/${infile[14]}
+export FORT39=$work/${infile[15]}
+export FORT41=$work/${infile[16]}
+export FORT42=$work/${infile[17]}
+export FORT46=$work/${infile[18]}
+export FORT48=$work/${infile[19]}
+export FORT51=prepbufr.repr.$date           
+export FORT52=prevents.filtering.prepdata
+
+#  create the prepbufr files
+#  -------------------------
+
+set +e
+time $PRPX <prepdata.stdin >prepdata.out  
+set -e
+
+#  install new data in old prepbufr
+#  --------------------------------
+
+time $bush/get-cb-pb $date # get old prepbufr
+rm -rf subsets; mkdir subsets; cd subsets
+$exec/spltsubs  ../prepbufr.cbkt.$date >/dev/null 
+$exec/spltsubs  ../prepbufr.repr.$date >/dev/null
+cat * > $work/save/gdas.$datetime.prepbufr.nr
+cd $work
+
+#  end of prepbufr loop
+#  --------------------
+
+date=$($NDATE  6 $date) 
+done
+
+#  store the prepbufr files in aws and clean up
+#  --------------------------------------------
+
+cd $work/save  
+
+year=$(echo $yrmn|cut -c 1-4)
+mnth=$(echo $yrmn|cut -c 5-6)
+buck=s3://noaa-reanalyses-pds/observations/reanalysis/conv/prepbufr/$year/$mnth/prepbufr_reprocessed_v1.0
+
+set -x
+aws s3 cp . $buck --recursive  --profile=rnr-bdp  --quiet
+set +x
+
+cd $data; rm -rf $work
