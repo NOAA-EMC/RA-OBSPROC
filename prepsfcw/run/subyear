@@ -1,7 +1,0 @@
-set -eua
-
-year=$1; shift; [[ $# = 2 ]] && mnths="$*" || mnths="01 02 03 04 05 06 07 08 09 10 11 12"  
-
-for mnth in $mnths; do
-subrun ascmnth metop $year $mnth
-done
