@@ -1,0 +1,8 @@
+set -euax
+
+year=$1; [[ $# = 2 ]] && yend=$2 || yend=$1
+
+while [[ $year -le $yend ]]; do
+subtape runsatw $year
+year=$((year+1))
+done

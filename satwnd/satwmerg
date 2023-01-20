@@ -88,7 +88,9 @@ year=$(echo $yrmn|cut -c 1-4)
 mnth=$(echo $yrmn|cut -c 5-6)
 buck=s3://noaa-reanalyses-pds/observations/reprocessed-from-jack/amv/$prov/$year/$mnth/bufr
 
+set -x
 aws s3 cp --profile=rnr-bdp . $buck --recursive --quiet
+set +x
 
 cd $ptmp; rm -rf $dird
 

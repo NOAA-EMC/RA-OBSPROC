@@ -4,7 +4,9 @@ year=$1; mkdir -p $ptmp/satwnd.$year/jmar; cd $ptmp/satwnd.$year/jmar
 
 htar -xvf $eg5/JMAR_SATWND_dumpbufr_1987_2003  JMAR_SATWND_dumpbufr_$year
 
-tar -xvf JMAR_SATWND_dumpbufr_$year; rm JMAR_SATWND_dumpbufr_$year
+set +e
+tar -xvf JMAR_SATWND_dumpbufr_$year; rm JMAR_SATWND_dumpbufr_$year || exit 0
+set -e
 
 for mnth in $(ls JMAR_SATWND_dumpbufr_$year*); do
 yrmn=$(echo $mnth|cut -d'_' -f4)

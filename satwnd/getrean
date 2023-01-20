@@ -11,7 +11,10 @@ htar -xvf $eg5/REAN_SATWND_dumpbufr_1973_2000  REAN_SATWND_dumpbufr_$year
 
 # tar out the SATWND months for this year
 
-tar -xvf REAN_SATWND_dumpbufr_$year; rm REAN_SATWND_dumpbufr_$year
+set +e
+tar -xvf REAN_SATWND_dumpbufr_$year || exit 0
+set -e
+rm REAN_SATWND_dumpbufr_$year
 
 # process each SATWND month - rename days - add sat IDs - retar for use in merging
 
@@ -26,10 +29,10 @@ date=$(echo $file|cut -d'_' -f4)
 mv $file satwnd.REAN.$date  
 done
 
-# add in the satID's in the SATWND days
+# add in the satID's in the SATWND data
 
 for file in $(ls satwnd*); do
-sinvsatw $file
+sinvsatw $file >/dev/null   
 mv $file.said $file
 done
 
@@ -38,6 +41,10 @@ done
 echo makeing $ptmp/satwnd.$year/satwnd.REAN.$yrmn
 tar -cf $ptmp/satwnd.$year/satwnd.REAN.$yrmn satwnd.REAN.$yrmn????
 rm satwnd.REAN.$yrmn????
+
+#echo
+#diagsatw $ptmp/satwnd.$year/satwnd.REAN.$yrmn
+#echo
 
 done # end of SATWND months loop
 

@@ -22,9 +22,9 @@ cd        $dird
 for yymm in $yrm1 $yrmn; do 
 for file in $(ls $data/M*$yymm*tgz); do
 set +e
-[[ $yymm = $yrm1 ]] && tar --wildcards -zxf $file \*$(bumpidx ${yrmn}01 -1)\*
+[[ $yymm = $yrm1 ]] && tar --wildcards -xf $file \*$(bumpidx ${yrmn}01 -1)\*
 set -e
-[[ $yymm = $yrmn ]] && tar --wildcards -zxf $file
+[[ $yymm = $yrmn ]] && tar --wildcards -xf $file
 done;done
 
 # translate the netcdf into bufr into dest
