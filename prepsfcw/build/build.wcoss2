@@ -29,5 +29,10 @@ cwb erscat util.f
 mv erscat.x $exec/erscat
 
 echo '-----------------------------------------------------------------'
+cd $sorc/erscat.fd
+cwb erscat3 util.f
+mv erscat3.x $exec/erscat3
+
+echo '-----------------------------------------------------------------'
 
 

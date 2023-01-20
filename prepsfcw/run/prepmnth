@@ -126,4 +126,4 @@ set -x
 aws s3 cp . $buck --recursive  --profile=rnr-bdp  --quiet
 set +x
 
-cd $data; rm -rf $work
+cd $data; rm -rf $work prepdata.$yrmn

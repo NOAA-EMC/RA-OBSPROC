@@ -67,7 +67,9 @@ ln -sf ssmit.eums.$date$hh    fort.31
 ln -sf $inst.eums.$date$hh   fort.51
 XLFUNIT_27=sstgrb.gdas.$date$hh.r2
 
-cat $fixt/prepobs_prepssmi.fnl.parm|$exec/prepobs_prepssmi >prepssmi.out
+set +ex
+cat $fixt/prepobs_prepssmi.fnl.parm|$exec/prepobs_prepssmi >prepssmi.out || { echo problem with $date$hh; continue; }
+set -e
 
 done
 date=$(bumpidx $date 1)

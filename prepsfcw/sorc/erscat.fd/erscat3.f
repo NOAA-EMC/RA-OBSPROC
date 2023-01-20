@@ -4,7 +4,7 @@
 
       character(80) erstr,dastr,filename
       character(10) adate
-      character(8)  subset,subout,cpid
+      character(8)  subset,subout,cpid /'ERSWIND'/
       equivalence   (cpid,rpid)
 
       real(8) rdate,rswv,date(6),arr(15),wndv(2,4),rpid
@@ -26,8 +26,8 @@
 ! check to see if a valid report
 ! ------------------------------
 
-      call ufbint(lunin,rswv,1,1,iret,'ISWV')
-      if(rswv>4) cycle
+      call ufbint(lunin,rswv,1,1,iret,'WSPC2')
+      if(rswv>0) cycle
       iswv=rswv
 
 ! read the date/time and selected wind vector
@@ -52,7 +52,7 @@
       hour=0; hint=6
       call centime(rdate,hour,hint,idate,dhr)
       write(adate,'(I10)') i4dy(idate)
-      filename='erscat.eums.'//adate
+      filename='erscat.ncep.'//adate
       call outfile(filename,lunot,iret)
       if(iret==1) then
          call openmg(lunot,subout,idate)
@@ -65,10 +65,8 @@
 ! copy the report into erscat format
 ! ----------------------------------
 
-      erstr='SAID YEAR MNTH DAYS HOUR MINU SECO CLATH CLONH'
+      erstr='SAID YEAR MNTH DAYS HOUR MINU SECO CLAT CLON WS10 WD10'
       call ufbint(lunin,arr,15,1,iret,erstr)
-      arr(10)=wndv(1,iswv)
-      arr(11)=wndv(2,iswv)
       arr(12)=rpid
       erstr='SAID YEAR MNTH DAYS HOUR MINU SECO CLAT CLON WS10 WD10'
       call ufbint(lunot,arr,15,1,iret,trim(erstr)//' RPID')

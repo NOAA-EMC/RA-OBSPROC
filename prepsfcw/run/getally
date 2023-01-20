@@ -4,10 +4,13 @@ year=$(echo $1|cut -c 1-4); yrm1=$(bumpidx ${year}01 -1)
 dest=$ptmp/prepsfcw.$year; mkdir -p $dest; cd $dest
 
 ascatw=/5year/NCEPDEV/emc-global/Jack.Woollen/ASCAT25-METOP-UMSDS-BUFR-200701-201403
-htar -xvf $ascatw  ASCAT25-METOP-UMSDS-BUFR-$yrm1 ASCAT25-METOP-UMSDS-BUFR-$year\*
+[[ $year -ge 2007 && $year -le 2014 ]] && htar -xvf $ascatw  ASCAT25-METOP-UMSDS-BUFR-$yrm1 ASCAT25-METOP-UMSDS-BUFR-$year\*
 
 erscat=/5year/NCEPDEV/emc-global/Jack.Woollen/ERSCAT-ERS12-UMSDS-BUFR-199203-199912  
-htar -xvf $erscat  ERSWND-CMSAF-BUFR-$yrm1\*     ERSWND-CMSAF-BUFR-$year\*              
+[[ $year -ge 1992 && $year -le 1999 ]] && htar -xvf $erscat  ERSWND-CMSAF-BUFR-$yrm1\*     ERSWND-CMSAF-BUFR-$year\*              
+
+ers3db=/5year/NCEPDEV/emc-global/Jack.Woollen/ERSCAT-ERS3-NCEPDB-BUFR-200308-201107  
+[[ $year -ge 2003 && $year -le 2007 ]] && htar -xvf $ers3db  erswnd.$year\*              
 
 exit 00
 

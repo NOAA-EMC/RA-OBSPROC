@@ -26,7 +26,7 @@
 |----------|-------------------------------------------------------------------|
 |          |                                                                   |
 | NC012008 | RPID     SAID     YEAR     MNTH     DAYS     HOUR     MINU        |
-| NC012008 | SECO     CLAT     CLON     WD10     WS10     RPID     SAID        |
+| NC012008 | SECO     CLAT     CLON     WD10     WS10                          |
 |          |                                                                   |
 |------------------------------------------------------------------------------|
 | MNEMONIC | SCAL | REFERENCE   | BIT | UNITS                    |-------------|
