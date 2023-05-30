@@ -27,7 +27,7 @@
       character(6)        :: typ,sat,chm
       integer             :: day,hms,year,mnth,days,hour,minu,seco
       real(4)             :: lat,lon,prs,spd,dir,rff,qiwf,qinf,zen
-      real(8)             :: rdate,arr(maxarr),rat
+      real(8)             :: rdate,arr(maxarr),rat,qc(3,2)
       real(8)             :: fill=10d10                  
 
       equivalence (sat,rat)
@@ -155,8 +155,13 @@
       call outfile(filename,lunot,iret)
       !!write(6,*) lunot,rdate,filename
 
+      ! add some qc to the mix
+      
       call openmb(lunot,subset,idate)
       call ufbseq(lunot,arr,maxarr,1,iret,subset)
+      qc(1,1)= 176; qc(2,1)=6; qc(3,1)=qiwf*100.
+      qc(1,2)= 176; qc(2,2)=5; qc(3,2)=qinf*100.
+      call ufbrep(lunot,qc,3,2,iret,'OGCE GNAP PCCF')
       call writsb(lunot)
 
       goto 1

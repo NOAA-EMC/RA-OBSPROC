@@ -83,7 +83,7 @@ done
 # copy the month of files to aws 
 # ------------------------------
 
-prov=MERG       
+prov=UPDT       
 year=$(echo $yrmn|cut -c 1-4)
 mnth=$(echo $yrmn|cut -c 5-6)
 buck=s3://noaa-reanalyses-pds/observations/reprocessed-from-jack/amv/$prov/$year/$mnth/bufr

@@ -135,27 +135,27 @@
 | NC005010 | RCPTIM  RPID  CORN  SAID  OGCE  SCLF  SAZA  SSNX  SSNY  YEAR      |
 | NC005010 | MNTH  DAYS  HOUR  MINU  SECO  TPHR  CLAT  CLON  SIDP  SWCM  SCCF  |
 | NC005010 | SCBW  CCST  TCMD  LSQL  OFGI  SWQM  HAMD  PRLC  WDIR              |
-| NC005010 | WSPD  GQCPRMS                                                     |
+| NC005010 | WSPD  "GQCPRMS"4                                                     |
 |          |                                                                   |
 | NC005011 | RCPTIM  RPID  CORN  SAID  OGCE  SCLF  SAZA  SSNX  SSNY  YEAR      |
 | NC005011 | MNTH  DAYS  HOUR  MINU  SECO  TPHR  CLAT  CLON  SIDP  SWCM  SCCF  |
 | NC005011 | SCBW  CCST  TCMD  LSQL  OFGI  SWQM  HAMD  PRLC  WDIR              |
-| NC005011 | WSPD  GQCPRMS                                                     |
+| NC005011 | WSPD  "GQCPRMS"4                                                  |
 |          |                                                                   |
 | NC005012 | RCPTIM  RPID  CORN  SAID  OGCE  SCLF  SAZA  SSNX  SSNY  YEAR      |
 | NC005012 | MNTH  DAYS  HOUR  MINU  SECO  TPHR  CLAT  CLON  SIDP  SWCM  SCCF  |
 | NC005012 | SCBW  CCST  TCMD  LSQL  OFGI  SWQM  HAMD  PRLC  WDIR              |
-| NC005012 | WSPD  GQCPRMS                                                     |
+| NC005012 | WSPD  "GQCPRMS"4                                                  |
 |          |                                                                   |
 | NC005014 | RCPTIM  RPID  CORN  SAID  OGCE  SCLF  SAZA  SSNX  SSNY  YEAR      |
 | NC005014 | MNTH  DAYS  HOUR  MINU  SECO  TPHR  CLAT  CLON  SIDP  SWCM  SCCF  |
 | NC005014 | SCBW  CCST  TCMD  LSQL  OFGI  SWQM  HAMD  PRLC  WDIR              |
-| NC005014 | WSPD  GQCPRMS                                                     |
+| NC005014 | WSPD  "GQCPRMS"4                                                  |
 |          |                                                                   |
 | NC005019 | RCPTIM  RPID  CORN  SAID  OGCE  SCLF  SAZA  SSNX  SSNY  YEAR      |
 | NC005019 | MNTH  DAYS  HOUR  MINU  SECO  TPHR  CLAT  CLON  SIDP  SWCM  SCCF  |
 | NC005019 | SCBW  CCST  TCMD  LSQL  OFGI  SWQM  HAMD  PRLC  WDIR              |
-| NC005019 | WSPD  GQCPRMS                                                     |
+| NC005019 | WSPD  "GQCPRMS"4                                                  |
 |          |                                                                   |
 | YYMMDD   | YEAR  MNTH  DAYS                                                  |
 |          |                                                                   |

@@ -113,6 +113,8 @@ cd $work
 date=$($NDATE  6 $date) 
 done
 
+exit
+
 #  store the prepbufr files in aws and clean up
 #  --------------------------------------------
 

@@ -52,7 +52,7 @@
       real(4),allocatable,dimension(:):: speed2
       real(4),allocatable,dimension(:):: speed3
 
-      real(8) arr(maxarr),rdate,x/10d10/
+      real(8) arr(maxarr),qc(2,2),rdate,x/10d10/
 
 !---------------------------------------------------------------------------------------------------------
 !---------------------------------------------------------------------------------------------------------
@@ -428,10 +428,19 @@
       call outfile(filename,lunot,iret)
 
 
-      ! write a subset containing this report
+      ! write the report sequence
 
       call openmb(lunot,subset,idate)
       call ufbseq(lunot,arr,maxarr,1,iret,'SATDRWN2')
+
+      ! add some qc to the mix
+
+      qc(1,1)= 6; qc(2,1)=qi(n)
+      qc(1,2)= 5; qc(2,2)=qi_exc(n)
+      call ufbrep(lunot,qc,2,2,iret,'GNAPS PCCF')
+
+      ! write the completed subset
+
       call writsb(lunot)
       
       enddo
